@@ -21,7 +21,7 @@
  | Free Software Foundation,                                              |
  | Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA     |
  +------------------------------------------------------------------------+
- | Author:  Serghei Iakovlev <me@klay.me>                                 |
+ | Author: Serghei Iakovlev <me@klay.me>                                  |
  +------------------------------------------------------------------------+
  */
 
@@ -47,9 +47,20 @@ class Utf8
      */
     protected _mbSupport = false;
 
-    public function __construct()
+    /**
+     * Encoding using in mb_* functions
+     * @var string
+     */
+    protected _encoding = "utf-8";
+
+    /**
+     * Class constructor
+     * @param string encoding Encoding using in mb_* functions
+     */
+    public function __construct(string! encoding="utf-8")
     {
         let this->_mbSupport = extension_loaded("mbstring");
+        let this->_encoding = encoding;
     }
 
     /**
@@ -65,5 +76,24 @@ class Utf8
         }
 
         return !preg_match("/[^\x00-\x7F]/S", text);
+    }
+
+    /**
+     * Get string length.
+     * This is a UTF8-aware version of [strlen](http://php.net/strlen).
+     *
+     * @param string text String being measured for length
+     */
+    public function strlen(string text) ->int
+    {
+        if this->_mbSupport {
+            return mb_strlen(text, this->_encoding);
+        }
+
+        if this->isAscii(text) {
+            return strlen(text);
+        }
+
+        return strlen(utf8_decode(text));
     }
 }
