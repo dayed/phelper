@@ -35,3 +35,6 @@ echo -e ""
 
 cd ..
 sudo ./install -c
+
+echo -e "\n\e[0;32mDone\e[0m"
+echo -e ""
