@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+
+env:
+  global:
+    - ZEPHIR_VER=0.5.9
+    - ZEPHIRDIR=/usr/local/src/zephir
+
+before_script:
+  - ./tests/ci/install_zephir.sh
+  - zephir generate
+  - cd ext && phpize && ./configure && make && sudo make install && phpenv config-add ../tests/ci/phelper.ini && cd ../tests
+
+script: phpunit
+
+after_failure:
+  - php -m
+  - php --info
