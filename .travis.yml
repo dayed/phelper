@@ -12,6 +12,7 @@ env:
     - ZEPHIRDIR=/usr/local/src/zephir
 
 before_script:
+  - "composer self-update"
   - ./tests/ci/install_zephir.sh
   - zephir generate
   - cd ext && phpize && ./configure && make && sudo make install && phpenv config-add ../tests/ci/phelper.ini && cd ../tests
