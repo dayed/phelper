@@ -34,4 +34,4 @@ echo -e "\n\e[0;32mBuild and install Zephir...\e[0m"
 echo -e ""
 
 cd ..
-./install -c
+sudo ./install -c
