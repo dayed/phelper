@@ -6,7 +6,7 @@
     "warnings": {
         "unused-variable": true,
         "unused-variable-external": false,
-        "possible-wrong-parameter": true,
+        "possible-wrong-parameter": false,
         "possible-wrong-parameter-undefined": false,
         "nonexistent-function": true,
         "nonexistent-class": true,
@@ -42,11 +42,17 @@
     "name": "phelper",
     "description": "Phalcon Helpers",
     "author": "Serghei Iakovlev",
-    "version": "0.0.1",
+    "version": "0.0.1-dev",
     "verbose": false,
     "requires": {
-        "extensions": [
-
-        ]
-    }
+        "extensions": []
+    },
+    "info": [
+        {
+            "header": ["Component", "Version", "Description"],
+            "rows": [
+                ["Utf8", "0.0.1-dev", "Provides multi-byte aware replacement string functions."]
+            ]
+        }
+    ]
 }

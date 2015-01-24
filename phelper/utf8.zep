@@ -4,7 +4,7 @@
  +------------------------------------------------------------------------+
  | Copyright (c) 2015 Serghei Iakovlev (http://klay.me)                   |
  | Copyright (c) 2007-2012 Kohana Team                                    |
- | Copyright (c) 2005 Harry Fuecks                                   |
+ | Copyright (c) 2005 Harry Fuecks                                        |
  +------------------------------------------------------------------------+
  | This library is free software; you can redistribute it and/or          |
  | modify it under the terms of the GNU Lesser General Public             |
@@ -21,7 +21,7 @@
  | Free Software Foundation,                                              |
  | Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA     |
  +------------------------------------------------------------------------+
- | Author: Serghei Iakovlev <me@klay.me>                                  |
+ | Author: Serghei Iakovlev <sadhooklay@gmail.com>                        |
  +------------------------------------------------------------------------+
  */
 
@@ -38,6 +38,9 @@ namespace Phelper;
  *   is highly recommended (--enable-unicode-properties)
  * - The [mbstring extension](http://php.net/mbstring) is highly recommended,
  *   but must not be overloading string functions
+ *
+ * @package Phelper
+ * @version 0.0.1-dev
  */
 class Utf8
 {
