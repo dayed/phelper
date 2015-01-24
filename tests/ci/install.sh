@@ -5,11 +5,11 @@ INSTALL_DIR=/usr/local/src/zephir
 echo -e "\n\e[0;32mBuild and install Zephir from https://github.com/phalcon/zephir\e[0m [\e[1;33m${ZEPHIR_VER}\e[0m]"
 echo -e ""
 
-sudo mkdir $INSTALL_DIR
-sudo chown $USER $INSTALL_DIR
-git clone https://github.com/phalcon/zephir.git $INSTALL_DIR
 
-cd $INSTALL_DIR
+sudo chown $USER $ZEPHIRDIR
+git clone https://github.com/phalcon/zephir.git $ZEPHIRDIR
+
+cd $ZEPHIRDIR
 git checkout ${ZEPHIR_VER}
 git submodule update --init
 
