@@ -9,15 +9,7 @@ sudo zephir build
 
 echo -e "\e[0;32mBuild Done!\e[0m\n"
 
-# cd ./ext
-# echo -e "\e[0;32m ./ext/ dir files:\e[0m\n"
-# ls -al
-
-# phpize --silent
-# ./configure --silent
-# make --silent && sudo make --silent install
-
-phpenv config-add ../tests/ci/phelper.ini
+phpenv config-add ./tests/ci/phelper.ini
 phpenv rehash
 
 cd "${CURRENT_DIR}"
