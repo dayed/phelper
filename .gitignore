@@ -5,6 +5,10 @@ ext/
 compile-errors.log
 compile.log
 
+# Build files
+build/
+ide/
+
 # Object files
 *.o
 *.ko
