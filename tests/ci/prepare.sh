@@ -5,15 +5,17 @@ cd "${CURRENT_DIR}"
 echo -e "\e[0;32mCurrent dir:\e[0m [\e[1;33m${CURRENT_DIR}\e[0m]\n"
 
 echo -e "\e[0;32mGenerate C code from the Zephir code\e[0m\n"
-zephir generate
+sudo zephir build
 
-echo -e "\e[0;32mGeneration Done!\e[0m\n"
+echo -e "\e[0;32mBuild Done!\e[0m\n"
 
-cd ./ext
+# cd ./ext
+# echo -e "\e[0;32m ./ext/ dir files:\e[0m\n"
+# ls -al
 
-phpize --silent
-./configure --silent
-make --silent && sudo make --silent install
+# phpize --silent
+# ./configure --silent
+# make --silent && sudo make --silent install
 
 phpenv config-add ../tests/ci/phelper.ini
 phpenv rehash
