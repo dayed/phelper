@@ -8,3 +8,13 @@ echo -e "\e[0;32mGenerate C code from the Zephir code\e[0m\n"
 zephir generate
 
 echo -e "\e[0;32mGeneration Done!\e[0m\n"
+
+cd ./ext
+
+phpize --silent
+./configure --silent
+make --silent && sudo make --silent install
+
+phpenv config-add ../tests/ci/phelper.ini
+
+cd "${CURRENT_DIR}"
