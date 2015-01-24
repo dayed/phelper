@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    bootstrap="./bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    strict="true">
+
+    <testsuites>
+        <testsuite name="Phelper Test Suite">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
