@@ -13,7 +13,8 @@ env:
 
 before_script:
   - ./tests/ci/install.sh
-  - sudo zephir build
+  - ./tests/ci/prepare.sh
+  - cd ext && phpize --silent && ./configure --silent --enable-shell && make --silent && sudo make --silent install && phpenv config-add ../tests/ci/phelper.ini && cd ../
 
 script: phpunit ./tests/
 
