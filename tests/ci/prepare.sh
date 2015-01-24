@@ -16,5 +16,6 @@ phpize --silent
 make --silent && sudo make --silent install
 
 phpenv config-add ../tests/ci/phelper.ini
+phpenv rehash
 
 cd "${CURRENT_DIR}"
