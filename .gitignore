@@ -31,7 +31,6 @@ ext/config.status
 ext/libtool
 ext/.libs/
 ext/modules/
-ext/kernel/
 /vendor/
 compile-errors.log
 compile.log
