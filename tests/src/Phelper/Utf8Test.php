@@ -117,4 +117,27 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     {
         $this->assertSame($expected, $this->utf->substr($input, $offset, $length));
     }
+
+    /**
+     * Provides test data for testToAscii()
+     */
+    public function toAsciiProvider()
+    {
+        return array(
+            array('Phålcón', Utf8::LOWER_CASE, 'Phalcon'),
+            array('PHÅLCÓN', Utf8::LOWER_CASE, 'PHÅLCÓN'),
+            array('Phålcón', Utf8::IGNORE_CASE, 'Phalcon'),
+            array('PHÅLCÓN', Utf8::IGNORE_CASE, 'PHALCON'),
+            array('Phålcón', Utf8::UPPER_CASE, 'Phålcón'),
+            array('PHÅLCÓN', Utf8::UPPER_CASE, 'PHALCON'),
+        );
+    }
+
+    /**
+     * @dataProvider toAsciiProvider
+     */
+    public function testToAscii($input, $case, $expected)
+    {
+        $this->assertSame($expected, $this->utf->toAscii($input, $case));
+    }
 }
