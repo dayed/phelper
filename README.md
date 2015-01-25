@@ -11,7 +11,6 @@ The Phelper package provides Phalcon Helpers written in Zephir.
 
 ### Current Components
 
------------------
 | Component | Version | Status | Description |
 |-----------|---------|--------|-------|
 |**Utf8**|0.0.1-dev|OK|Provides multi-byte aware replacement string functions.|
