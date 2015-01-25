@@ -1,7 +1,10 @@
 {
+    "watch": {
+        "fpm-restart": true
+    },
     "stubs": {
         "path": "ide\/%version%\/%namespace%\/",
-        "stubs-run-after-generate": false
+        "stubs-run-after-generate": true
     },
     "warnings": {
         "unused-variable": true,
@@ -39,8 +42,8 @@
         "check-invalid-reads": false
     },
     "namespace": "phelper",
-    "name": "phelper",
-    "description": "Phalcon Helpers",
+    "name": "Phalcon Helpers",
+    "description": "Phalcon Helpers written in Zephir",
     "author": "Serghei Iakovlev",
     "version": "0.0.1-dev",
     "verbose": false,
