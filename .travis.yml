@@ -6,14 +6,18 @@ php:
   - 5.5
   - 5.6
 
+install:
+  - composer --prefer-source install
+  - composer require phalcon/zephir:0.5.9 --prefer-source
+
 env:
   global:
     - ZEPHIR_VER=0.5.9
     - ZEPHIRDIR=/usr/local/src/zephir
 
 before_script:
-  - ./tests/ci/install.sh
-  - ./tests/ci/prepare.sh
+  - (cd vendor/phalcon/zephir; ./unit-tests/ci/before_install.sh; ./install)
+  - cd ext && phpize --silent && ./configure --silent --enable-phelper && make --silent && sudo make --silent install && phpenv config-add ../tests/ci/phelper.ini && cd ../
 
 script: phpunit ./tests/
 
