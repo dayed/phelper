@@ -136,8 +136,8 @@ class Utf8
 
         // Normalize params
         let stringLen = this->strlen(text);
-        let offset = (int) (offset < 0) ? max(0, stringLen + offset) : offset;
-        let length = (length === null) ? null : (int) length;
+        let offset = (offset < 0) ? max(0, stringLen + offset) : intval(offset);
+        let length = (length === null) ? null : intval(length);
 
         // Impossible
         if length === 0 || offset >= stringLen || (length < 0 && length <= offset - stringLen) {
@@ -155,8 +155,8 @@ class Utf8
         // Create an offset expression
         if offset > 0 {
             // PCRE repeating quantifiers must be less than 65536, so repeat when necessary
-            let x = (int) (offset / 65535);
-            let y = (int) (offset % 65535);
+            let x = intval(offset / 65535);
+            let y = intval(offset % 65535);
 
             let regex .= (x == 0) ? "" : "(?:.{65535}){".x."}";
             let regex .= (y == 0) ? "" : ".{".y."}";
@@ -170,15 +170,15 @@ class Utf8
             // Reduce length so that it can't go beyond the end of the string
             let length = min(stringLen - offset, length);
 
-            let x = (int) (length / 65535);
-            let y = ((int) length % 65535);
+            let x = intval(length / 65535);
+            let y = intval(length) % 65535;
             let regex .= "(";
             let regex .= (x == 0) ? "" : "(?:.{65535}){".x."}";
             let regex .= ".{".y."})";
         } else {
             // Find length from the right (negative length)
-            let x = (int) (-length / 65535);
-            let y = ((int) -length % 65535);
+            let x = intval(-length / 65535);
+            let y = intval(-length) % 65535;
             let regex .= "(.*)";
             let regex .= (x == 0) ? "" : "(?:.{65535}){".x."}";
             let regex .= ".{".y."}";
