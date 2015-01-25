@@ -13,7 +13,6 @@ env:
 
 before_script:
   - ./tests/ci/install.sh
-  - zephir generate
   - ./tests/ci/prepare.sh
 
 script: phpunit ./tests/
