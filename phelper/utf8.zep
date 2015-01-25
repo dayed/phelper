@@ -118,7 +118,8 @@ class Utf8
      */
     public function substr(string! text, int! offset, var length=null) ->string
     {
-        var stringLen, matches;
+        var stringLen;
+        array matches = [];
         string regex;
         int x = 0,
             y = 0;
@@ -184,7 +185,6 @@ class Utf8
             let regex .= ".{".y."}";
         }
 
-        let matches = [];
         preg_match("#".regex."#us", text, matches);
         return matches[1];
     }

@@ -10,12 +10,12 @@
 
 #include "kernel/globals.h"
 
-#define PHP_PHELPER_NAME        "phelper"
+#define PHP_PHELPER_NAME        "Phalcon Helpers"
 #define PHP_PHELPER_VERSION     "0.0.1-dev"
 #define PHP_PHELPER_EXTNAME     "phelper"
 #define PHP_PHELPER_AUTHOR      "Serghei Iakovlev"
 #define PHP_PHELPER_ZEPVERSION  "0.5.9a"
-#define PHP_PHELPER_DESCRIPTION "Phalcon Helpers"
+#define PHP_PHELPER_DESCRIPTION "Phalcon Helpers written in Zephir"
 
 
 

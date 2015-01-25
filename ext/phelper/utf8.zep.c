@@ -227,8 +227,9 @@ PHP_METHOD(Phelper_Utf8, substr) {
 	zend_bool _13, _14, _15, _16, _17;
 	zephir_nts_static zephir_fcall_cache_entry *_7 = NULL, *_11 = NULL, *_21 = NULL, *_22 = NULL;
 	zephir_fcall_cache_entry *_5 = NULL;
+	zval *matches;
 	int offset, x = 0, y = 0, ZEPHIR_LAST_CALL_STATUS;
-	zval *text_param = NULL, *offset_param = NULL, *length = NULL, *stringLen = NULL, *matches, *_0, *_1 = NULL, *_2 = NULL, *_3, _4 = zval_used_for_init, *_6, *_9 = NULL, *_10, *_12 = NULL, *_19 = NULL, _20 = zval_used_for_init, *_23;
+	zval *text_param = NULL, *offset_param = NULL, *length = NULL, *stringLen = NULL, *_0, *_1 = NULL, *_2 = NULL, *_3, _4 = zval_used_for_init, *_6, *_9 = NULL, *_10, *_12 = NULL, *_19 = NULL, _20 = zval_used_for_init, *_23;
 	zval *text = NULL, *regex, *_8 = NULL, *_18 = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -256,6 +257,8 @@ PHP_METHOD(Phelper_Utf8, substr) {
 	} else {
 		ZEPHIR_SEPARATE_PARAM(length);
 	}
+	ZEPHIR_INIT_VAR(matches);
+	array_init(matches);
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_mbSupport"), PH_NOISY_CC);
@@ -429,8 +432,6 @@ PHP_METHOD(Phelper_Utf8, substr) {
 		ZEPHIR_CONCAT_SVS(_18, ".{", &_20, "}");
 		zephir_concat_self(&regex, _18 TSRMLS_CC);
 	}
-	ZEPHIR_INIT_VAR(matches);
-	array_init(matches);
 	ZEPHIR_INIT_LNVAR(_18);
 	ZEPHIR_CONCAT_SVS(_18, "#", regex, "#us");
 	Z_SET_ISREF_P(matches);
