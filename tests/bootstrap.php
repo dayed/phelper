@@ -4,8 +4,6 @@
  | Phalcon Helpers                                                        |
  +------------------------------------------------------------------------+
  | Copyright (c) 2015 Serghei Iakovlev (http://klay.me)                   |
- | Copyright (c) 2007-2012 Kohana Team                                    |
- | Copyright (c) 2005 Harry Fuecks                                        |
  +------------------------------------------------------------------------+
  | This library is free software; you can redistribute it and/or          |
  | modify it under the terms of the GNU Lesser General Public             |
@@ -27,10 +25,10 @@
  */
 
 // turn on all errors
-error_reporting(E_ALL);
+error_reporting(-1);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 if (!extension_loaded('phelper')) {
-   print_r(get_loaded_extensions());
-   exit(1);
+   throw new \RuntimeException(sprintf('The Phelper extension is not installed or is disabled.'));
 }
