@@ -135,7 +135,6 @@ class Utf8
         }
 
         // Normalize params
-        let text = (string) text;
         let stringLen = this->strlen(text);
         let offset = (int) (offset < 0) ? max(0, stringLen + offset) : offset;
         let length = (length === null) ? null : (int) length;

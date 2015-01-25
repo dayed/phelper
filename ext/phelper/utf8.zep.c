@@ -224,13 +224,13 @@ PHP_METHOD(Phelper_Utf8, strlen) {
  */
 PHP_METHOD(Phelper_Utf8, substr) {
 
-	zend_bool _13, _14, _15, _16, _17;
-	zephir_nts_static zephir_fcall_cache_entry *_7 = NULL, *_11 = NULL, *_21 = NULL, *_22 = NULL;
+	zend_bool _12, _13, _14, _15, _16;
+	zephir_nts_static zephir_fcall_cache_entry *_7 = NULL, *_10 = NULL, *_20 = NULL, *_21 = NULL;
 	zephir_fcall_cache_entry *_5 = NULL;
 	zval *matches;
 	int offset, x = 0, y = 0, ZEPHIR_LAST_CALL_STATUS;
-	zval *text_param = NULL, *offset_param = NULL, *length = NULL, *stringLen = NULL, *_0, *_1 = NULL, *_2 = NULL, *_3, _4 = zval_used_for_init, *_6, *_9 = NULL, *_10, *_12 = NULL, *_19 = NULL, _20 = zval_used_for_init, *_23;
-	zval *text = NULL, *regex, *_8 = NULL, *_18 = NULL;
+	zval *text_param = NULL, *offset_param = NULL, *length = NULL, *stringLen = NULL, *_0, *_1 = NULL, *_2 = NULL, *_3, _4 = zval_used_for_init, *_6, *_8 = NULL, *_9, *_11 = NULL, *_18 = NULL, _19 = zval_used_for_init, *_22;
+	zval *text = NULL, *regex, *_17 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 1, &text_param, &offset_param, &length);
@@ -298,56 +298,54 @@ PHP_METHOD(Phelper_Utf8, substr) {
 		}
 		RETURN_CCTOR(_1);
 	}
-	zephir_get_strval(_8, text);
-	ZEPHIR_CPY_WRT(text, _8);
 	ZEPHIR_CALL_METHOD(&stringLen, this_ptr, "strlen", NULL, text);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_9);
+	ZEPHIR_INIT_VAR(_8);
 	if ((offset < 0)) {
 		ZEPHIR_INIT_NVAR(_1);
 		ZVAL_LONG(_1, 0);
-		ZEPHIR_INIT_VAR(_10);
-		ZVAL_LONG(_10, (zephir_get_numberval(stringLen) + offset));
-		ZEPHIR_CALL_FUNCTION(&_9, "max", &_11, _1, _10);
+		ZEPHIR_INIT_VAR(_9);
+		ZVAL_LONG(_9, (zephir_get_numberval(stringLen) + offset));
+		ZEPHIR_CALL_FUNCTION(&_8, "max", &_10, _1, _9);
 		zephir_check_call_status();
 	} else {
-		ZEPHIR_INIT_NVAR(_9);
-		ZVAL_LONG(_9, offset);
+		ZEPHIR_INIT_NVAR(_8);
+		ZVAL_LONG(_8, offset);
 	}
-	offset = zephir_get_numberval(_9);
-	ZEPHIR_INIT_VAR(_12);
+	offset = zephir_get_numberval(_8);
+	ZEPHIR_INIT_VAR(_11);
 	if (Z_TYPE_P(length) == IS_NULL) {
-		ZEPHIR_INIT_NVAR(_12);
-		ZVAL_NULL(_12);
+		ZEPHIR_INIT_NVAR(_11);
+		ZVAL_NULL(_11);
 	} else {
-		ZEPHIR_INIT_NVAR(_12);
-		ZVAL_LONG(_12, zephir_get_intval(length));
+		ZEPHIR_INIT_NVAR(_11);
+		ZVAL_LONG(_11, zephir_get_intval(length));
 	}
-	ZEPHIR_CPY_WRT(length, _12);
-	_13 = ZEPHIR_IS_LONG_IDENTICAL(length, 0);
+	ZEPHIR_CPY_WRT(length, _11);
+	_12 = ZEPHIR_IS_LONG_IDENTICAL(length, 0);
+	if (!(_12)) {
+		_12 = ZEPHIR_LT_LONG(stringLen, offset);
+	}
+	_13 = _12;
 	if (!(_13)) {
-		_13 = ZEPHIR_LT_LONG(stringLen, offset);
-	}
-	_14 = _13;
-	if (!(_14)) {
-		_15 = ZEPHIR_LT_LONG(length, 0);
-		if (_15) {
-			_15 = ZEPHIR_LE_LONG(length, (offset - zephir_get_numberval(stringLen)));
+		_14 = ZEPHIR_LT_LONG(length, 0);
+		if (_14) {
+			_14 = ZEPHIR_LE_LONG(length, (offset - zephir_get_numberval(stringLen)));
 		}
-		_14 = _15;
+		_13 = _14;
 	}
-	if (_14) {
+	if (_13) {
 		RETURN_MM_STRING("", 1);
 	}
-	_16 = offset == 0;
-	if (_16) {
-		_17 = Z_TYPE_P(length) == IS_NULL;
-		if (!(_17)) {
-			_17 = ZEPHIR_GE(length, stringLen);
+	_15 = offset == 0;
+	if (_15) {
+		_16 = Z_TYPE_P(length) == IS_NULL;
+		if (!(_16)) {
+			_16 = ZEPHIR_GE(length, stringLen);
 		}
-		_16 = _17;
+		_15 = _16;
 	}
-	if (_16) {
+	if (_15) {
 		RETURN_CTOR(text);
 	}
 	ZEPHIR_INIT_VAR(regex);
@@ -355,91 +353,91 @@ PHP_METHOD(Phelper_Utf8, substr) {
 	if (offset > 0) {
 		x = (int) (zephir_safe_div_long_long(offset, 65535 TSRMLS_CC));
 		y = ((offset % 65535));
-		ZEPHIR_INIT_LNVAR(_12);
+		ZEPHIR_INIT_LNVAR(_11);
 		if (x == 0) {
-			ZEPHIR_INIT_NVAR(_12);
-			ZVAL_STRING(_12, "", 1);
+			ZEPHIR_INIT_NVAR(_11);
+			ZVAL_STRING(_11, "", 1);
 		} else {
 			ZEPHIR_SINIT_NVAR(_4);
 			ZVAL_LONG(&_4, x);
-			ZEPHIR_INIT_VAR(_18);
-			ZEPHIR_CONCAT_SVS(_18, "(?:.{65535}){", &_4, "}");
-			ZEPHIR_CPY_WRT(_12, _18);
+			ZEPHIR_INIT_VAR(_17);
+			ZEPHIR_CONCAT_SVS(_17, "(?:.{65535}){", &_4, "}");
+			ZEPHIR_CPY_WRT(_11, _17);
 		}
-		zephir_concat_self(&regex, _12 TSRMLS_CC);
-		ZEPHIR_INIT_VAR(_19);
+		zephir_concat_self(&regex, _11 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_18);
 		if (y == 0) {
-			ZEPHIR_INIT_NVAR(_19);
-			ZVAL_STRING(_19, "", 1);
+			ZEPHIR_INIT_NVAR(_18);
+			ZVAL_STRING(_18, "", 1);
 		} else {
-			ZEPHIR_SINIT_VAR(_20);
-			ZVAL_LONG(&_20, y);
-			ZEPHIR_INIT_LNVAR(_18);
-			ZEPHIR_CONCAT_SVS(_18, ".{", &_20, "}");
-			ZEPHIR_CPY_WRT(_19, _18);
+			ZEPHIR_SINIT_VAR(_19);
+			ZVAL_LONG(&_19, y);
+			ZEPHIR_INIT_LNVAR(_17);
+			ZEPHIR_CONCAT_SVS(_17, ".{", &_19, "}");
+			ZEPHIR_CPY_WRT(_18, _17);
 		}
-		zephir_concat_self(&regex, _19 TSRMLS_CC);
+		zephir_concat_self(&regex, _18 TSRMLS_CC);
 	}
 	if (Z_TYPE_P(length) == IS_NULL) {
 		zephir_concat_self_str(&regex, "(.*)", sizeof("(.*)")-1 TSRMLS_CC);
 	} else if (ZEPHIR_GT_LONG(length, 0)) {
 		ZEPHIR_INIT_NVAR(_1);
 		ZVAL_LONG(_1, (zephir_get_numberval(stringLen) - offset));
-		ZEPHIR_CALL_FUNCTION(&_2, "min", &_21, _1, length);
+		ZEPHIR_CALL_FUNCTION(&_2, "min", &_20, _1, length);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(length, _2);
 		x = (int) (zephir_safe_div_long_long(zephir_get_intval(length), 65535 TSRMLS_CC));
 		y = ((zephir_get_intval(length) % 65535));
 		zephir_concat_self_str(&regex, "(", sizeof("(")-1 TSRMLS_CC);
-		ZEPHIR_INIT_LNVAR(_19);
+		ZEPHIR_INIT_LNVAR(_18);
 		if (x == 0) {
-			ZEPHIR_INIT_NVAR(_19);
-			ZVAL_STRING(_19, "", 1);
+			ZEPHIR_INIT_NVAR(_18);
+			ZVAL_STRING(_18, "", 1);
 		} else {
 			ZEPHIR_SINIT_NVAR(_4);
 			ZVAL_LONG(&_4, x);
-			ZEPHIR_INIT_LNVAR(_18);
-			ZEPHIR_CONCAT_SVS(_18, "(?:.{65535}){", &_4, "}");
-			ZEPHIR_CPY_WRT(_19, _18);
+			ZEPHIR_INIT_LNVAR(_17);
+			ZEPHIR_CONCAT_SVS(_17, "(?:.{65535}){", &_4, "}");
+			ZEPHIR_CPY_WRT(_18, _17);
 		}
-		zephir_concat_self(&regex, _19 TSRMLS_CC);
-		ZEPHIR_SINIT_NVAR(_20);
-		ZVAL_LONG(&_20, y);
-		ZEPHIR_INIT_LNVAR(_18);
-		ZEPHIR_CONCAT_SVS(_18, ".{", &_20, "})");
 		zephir_concat_self(&regex, _18 TSRMLS_CC);
+		ZEPHIR_SINIT_NVAR(_19);
+		ZVAL_LONG(&_19, y);
+		ZEPHIR_INIT_LNVAR(_17);
+		ZEPHIR_CONCAT_SVS(_17, ".{", &_19, "})");
+		zephir_concat_self(&regex, _17 TSRMLS_CC);
 	} else {
 		zephir_negate(length TSRMLS_CC);
 		x = (int) (zephir_safe_div_long_long(zephir_get_intval(length), 65535 TSRMLS_CC));
 		zephir_negate(length TSRMLS_CC);
 		y = ((zephir_get_intval(length) % 65535));
 		zephir_concat_self_str(&regex, "(.*)", sizeof("(.*)")-1 TSRMLS_CC);
-		ZEPHIR_INIT_LNVAR(_19);
+		ZEPHIR_INIT_LNVAR(_18);
 		if (x == 0) {
-			ZEPHIR_INIT_NVAR(_19);
-			ZVAL_STRING(_19, "", 1);
+			ZEPHIR_INIT_NVAR(_18);
+			ZVAL_STRING(_18, "", 1);
 		} else {
 			ZEPHIR_SINIT_NVAR(_4);
 			ZVAL_LONG(&_4, x);
-			ZEPHIR_INIT_LNVAR(_18);
-			ZEPHIR_CONCAT_SVS(_18, "(?:.{65535}){", &_4, "}");
-			ZEPHIR_CPY_WRT(_19, _18);
+			ZEPHIR_INIT_LNVAR(_17);
+			ZEPHIR_CONCAT_SVS(_17, "(?:.{65535}){", &_4, "}");
+			ZEPHIR_CPY_WRT(_18, _17);
 		}
-		zephir_concat_self(&regex, _19 TSRMLS_CC);
-		ZEPHIR_SINIT_NVAR(_20);
-		ZVAL_LONG(&_20, y);
-		ZEPHIR_INIT_LNVAR(_18);
-		ZEPHIR_CONCAT_SVS(_18, ".{", &_20, "}");
 		zephir_concat_self(&regex, _18 TSRMLS_CC);
+		ZEPHIR_SINIT_NVAR(_19);
+		ZVAL_LONG(&_19, y);
+		ZEPHIR_INIT_LNVAR(_17);
+		ZEPHIR_CONCAT_SVS(_17, ".{", &_19, "}");
+		zephir_concat_self(&regex, _17 TSRMLS_CC);
 	}
-	ZEPHIR_INIT_LNVAR(_18);
-	ZEPHIR_CONCAT_SVS(_18, "#", regex, "#us");
+	ZEPHIR_INIT_LNVAR(_17);
+	ZEPHIR_CONCAT_SVS(_17, "#", regex, "#us");
 	Z_SET_ISREF_P(matches);
-	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_22, _18, text, matches);
+	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_21, _17, text, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_23, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf8.zep", 189 TSRMLS_CC);
-	RETURN_CTOR(_23);
+	zephir_array_fetch_long(&_22, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf8.zep", 188 TSRMLS_CC);
+	RETURN_CTOR(_22);
 
 }
 
