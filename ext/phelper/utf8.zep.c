@@ -386,7 +386,7 @@ PHP_METHOD(Phelper_Utf8, substr) {
 		ZEPHIR_CALL_FUNCTION(&_2, "min", &_20, _1, length);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(length, _2);
-		x = (int) (zephir_safe_div_long_long(zephir_get_intval(length), 65535 TSRMLS_CC));
+		x = (int) (zephir_safe_div_zval_long(length, 65535 TSRMLS_CC));
 		y = ((zephir_get_intval(length) % 65535));
 		zephir_concat_self_str(&regex, "(", sizeof("(")-1 TSRMLS_CC);
 		ZEPHIR_INIT_LNVAR(_18);
@@ -408,7 +408,7 @@ PHP_METHOD(Phelper_Utf8, substr) {
 		zephir_concat_self(&regex, _17 TSRMLS_CC);
 	} else {
 		zephir_negate(length TSRMLS_CC);
-		x = (int) (zephir_safe_div_long_long(zephir_get_intval(length), 65535 TSRMLS_CC));
+		x = (int) (zephir_safe_div_zval_long(length, 65535 TSRMLS_CC));
 		zephir_negate(length TSRMLS_CC);
 		y = ((zephir_get_intval(length) % 65535));
 		zephir_concat_self_str(&regex, "(.*)", sizeof("(.*)")-1 TSRMLS_CC);

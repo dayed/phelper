@@ -170,14 +170,14 @@ class Utf8
             // Reduce length so that it can't go beyond the end of the string
             let length = min(stringLen - offset, length);
 
-            let x = (int) ((int) length / 65535);
+            let x = (int) (length / 65535);
             let y = ((int) length % 65535);
             let regex .= "(";
             let regex .= (x == 0) ? "" : "(?:.{65535}){".x."}";
             let regex .= ".{".y."})";
         } else {
             // Find length from the right (negative length)
-            let x = (int) ((int) -length / 65535);
+            let x = (int) (-length / 65535);
             let y = ((int) -length % 65535);
             let regex .= "(.*)";
             let regex .= (x == 0) ? "" : "(?:.{65535}){".x."}";

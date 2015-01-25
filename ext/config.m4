@@ -2,9 +2,16 @@ PHP_ARG_ENABLE(phelper, whether to enable phelper, [ --enable-phelper   Enable P
 
 if test "$PHP_PHELPER" = "yes"; then
 
+	
+
+	if ! test "x" = "x"; then
+		PHP_EVAL_LIBLINE(, PHELPER_SHARED_LIBADD)
+	fi
+
 	AC_DEFINE(HAVE_PHELPER, 1, [Whether you have Phelper])
 	phelper_sources="phelper.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/exit.c phelper/utf8.zep.c "
-	PHP_NEW_EXTENSION(phelper, $phelper_sources, $ext_shared)
+	PHP_NEW_EXTENSION(phelper, $phelper_sources, $ext_shared,, )
+	PHP_SUBST(PHELPER_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS
 	CPPFLAGS="$CPPFLAGS $INCLUDES"
@@ -46,4 +53,5 @@ if test "$PHP_PHELPER" = "yes"; then
 	CPPFLAGS=$old_CPPFLAGS
 
 	PHP_INSTALL_HEADERS([ext/phelper], [php_PHELPER.h])
+
 fi
