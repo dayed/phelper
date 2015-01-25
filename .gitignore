@@ -1,10 +1,18 @@
+/vendor/
+/build/
+
+.DS_Store
 .idea/
 .temp/
+.settings/
+.cproject
+.project
 *.lo
 *.la
 *.o
 *.so
 *.lai
+
 ext/Makefile.global
 ext/acinclude.m4
 ext/aclocal.m4
@@ -31,9 +39,7 @@ ext/config.status
 ext/libtool
 ext/.libs/
 ext/modules/
-/vendor/
+
+composer.lock
 compile-errors.log
 compile.log
-
-# Build files
-build/
