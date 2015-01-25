@@ -2,6 +2,7 @@
   "name": "sergeyklay/phelper",
   "type": "library",
   "description": "Phalcon Helpers written in Zephir",
+  "version": "0.0.1",
   "keywords": [
     "phalcon",
     "zephir",
@@ -20,7 +21,8 @@
   ],
   "support": {
     "issues": "https://github.com/sergeyklay/phelper/issues",
-    "source": "https://github.com/sergeyklay/phelper"
+    "source": "https://github.com/sergeyklay/phelper",
+    "wiki": "https://github.com/sergeyklay/phelper/wiki"
   },
   "require": {
     "php": ">=5.3.0",
