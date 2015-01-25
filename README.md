@@ -1,6 +1,6 @@
 Phelper
 =======
-[![Build Status](https://travis-ci.org/sergeyklay/phelper.svg?branch=master)](https://travis-ci.org/sergeyklay/phelper)
+[![Build Status](https://travis-ci.org/sergeyklay/phelper.svg?branch=utf-to-ascii)](https://travis-ci.org/sergeyklay/phelper)
 [![License](https://poser.pugx.org/sergeyklay/phelper/license.svg)](https://github.com/sergeyklay/phelper/blob/master/LICENSE.txt)
 [![Dependency Status](https://www.versioneye.com/user/projects/54c4c81e0a18c34b38000074/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54c4c81e0a18c34b38000074)
 
