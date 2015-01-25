@@ -1,0 +1,10 @@
+ARG_ENABLE("phelper", "enable phelper", "no");
+
+if (PHP_PHELPER != "no") {
+  EXTENSION("phelper", "phelper.c", null, "-I"+configure_module_dirname);
+  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c hash.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c concat.c variables.c filter.c iterator.c exit.c", "phelper");
+  ADD_SOURCES(configure_module_dirname + "/kernel/extended", "array.c", "phelper");
+  
+  ADD_SOURCES(configure_module_dirname + "/phelper", "utf8.zep.c", "phelper");
+  ADD_FLAG("CFLAGS_PHELPER", "/D ZEPHIR_RELEASE");
+}
