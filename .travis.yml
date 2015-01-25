@@ -14,7 +14,6 @@ env:
 before_script:
   - ./tests/ci/install.sh
   - ./tests/ci/prepare.sh
-  - echo "extension=phelper.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
 
 script: phpunit ./tests/
 
