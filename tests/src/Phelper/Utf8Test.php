@@ -173,7 +173,7 @@ class Utf8Test extends PHPUnit_Framework_TestCase
             array(' bar ', null,            'bar '),
             array(' bar ', false,           'bar '),
             array('ålcó',  array('å', 'l'), 'có'),
-            array('alco',  'b',             'lco'),
+            array('alco',  'a',             'lco'),
             array('ålcó',  'å',             'lcó'),
         );
     }
