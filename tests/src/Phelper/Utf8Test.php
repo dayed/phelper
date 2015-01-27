@@ -117,4 +117,47 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     {
         $this->assertSame($expected, $this->utf->substr($input, $offset, $length));
     }
+
+
+    /**
+     * Provides test data for testStripAsciiCtrl()
+     */
+    public function stripAsciiCtrlProvider()
+    {
+        return array(
+            array("\0\021\x7F", ''),
+            array("\0I ♥ Phålcón", 'I ♥ Phålcón'),
+            array("I ♥ Phålcón\021", 'I ♥ Phålcón'),
+            array("\x7FI ♥ Phalcon", "I ♥ Phalcon"),
+            array("\x41", "A"),
+            array("\xFF", "\xFF"),
+        );
+    }
+
+    /**
+     * @dataProvider stripAsciiCtrlProvider
+     */
+    public function testStripAsciiCtrl($input, $expected)
+    {
+        $this->assertSame($expected, $this->utf->stripAsciiCtrl($input));
+    }
+
+    /**
+     * Provides test data for testStripNonAscii()
+     */
+    public function cstripNonAsciiProvider()
+    {
+        return array(
+            array('Phålcón', 'Phlcn'),
+            array("I ♥ Phalcon", 'I  Phalcon'),
+        );
+    }
+
+    /**
+     * @dataProvider cstripNonAsciiProvider
+     */
+    public function testStripNonAscii($input, $expected)
+    {
+        $this->assertSame($expected, $this->utf->stripNonAscii($input));
+    }
 }

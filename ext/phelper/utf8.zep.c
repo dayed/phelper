@@ -451,3 +451,87 @@ PHP_METHOD(Phelper_Utf8, substr) {
 
 }
 
+/**
+ * Strips out device control codes in the ASCII range.
+ *
+ * <code>
+ * $string = $utf->stripAsciiCtrl($string);
+ * </code>
+ */
+PHP_METHOD(Phelper_Utf8, stripAsciiCtrl) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
+	zval *text_param = NULL, *_0, *_1;
+	zval *text = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &text_param);
+
+	if (unlikely(Z_TYPE_P(text_param) != IS_STRING && Z_TYPE_P(text_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'text' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(text_param) == IS_STRING)) {
+		zephir_get_strval(text, text_param);
+	} else {
+		ZEPHIR_INIT_VAR(text);
+		ZVAL_EMPTY_STRING(text);
+	}
+
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_STRING(_0, "#[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F]+#S", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_VAR(_1);
+	ZVAL_STRING(_1, "", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", &_2, _0, _1, text);
+	zephir_check_temp_parameter(_0);
+	zephir_check_temp_parameter(_1);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Strips out all non-7bit ASCII bytes.
+ *
+ * <code>
+ * $string = $utf->stripNonAscii($string);
+ * <code>
+ */
+PHP_METHOD(Phelper_Utf8, stripNonAscii) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
+	zval *text_param = NULL, *_0, *_1;
+	zval *text = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &text_param);
+
+	if (unlikely(Z_TYPE_P(text_param) != IS_STRING && Z_TYPE_P(text_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'text' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(text_param) == IS_STRING)) {
+		zephir_get_strval(text, text_param);
+	} else {
+		ZEPHIR_INIT_VAR(text);
+		ZVAL_EMPTY_STRING(text);
+	}
+
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_STRING(_0, "#[^\\x00-\\x7F]+#S", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_VAR(_1);
+	ZVAL_STRING(_1, "", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", &_2, _0, _1, text);
+	zephir_check_temp_parameter(_0);
+	zephir_check_temp_parameter(_1);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+

@@ -187,4 +187,28 @@ class Utf8
         preg_match("#".regex."#us", text, matches);
         return matches[1];
     }
+
+    /**
+     * Strips out device control codes in the ASCII range.
+     *
+     * <code>
+     * $string = $utf->stripAsciiCtrl($string);
+     * </code>
+     */
+    public function stripAsciiCtrl(string! text) ->string
+    {
+        return preg_replace("#[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+#S", "", text);
+    }
+
+    /**
+     * Strips out all non-7bit ASCII bytes.
+     *
+     * <code>
+     * $string = $utf->stripNonAscii($string);
+     * <code>
+     */
+    public function stripNonAscii(string! text) ->string
+    {
+        return preg_replace("#[^\x00-\x7F]+#S", "", text);
+    }
 }

@@ -62,4 +62,26 @@ class Utf8
      */
 	public function substr($text, $offset, $length = null) {}
 
+    /**
+     * Strips out device control codes in the ASCII range.
+     * <code>
+     * $string = $utf->stripAsciiCtrl($string);
+     * </code>
+     *
+     * @param string $text 
+     * @return string 
+     */
+	public function stripAsciiCtrl($text) {}
+
+    /**
+     * Strips out all non-7bit ASCII bytes.
+     * <code>
+     * $string = $utf->stripNonAscii($string);
+     * <code>
+     *
+     * @param string $text 
+     * @return string 
+     */
+	public function stripNonAscii($text) {}
+
 }

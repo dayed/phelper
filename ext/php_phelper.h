@@ -10,7 +10,7 @@
 
 #include "kernel/globals.h"
 
-#define PHP_PHELPER_NAME        "Phalcon Helpers"
+#define PHP_PHELPER_NAME        "phelper"
 #define PHP_PHELPER_VERSION     "0.0.1-dev"
 #define PHP_PHELPER_EXTNAME     "phelper"
 #define PHP_PHELPER_AUTHOR      "Serghei Iakovlev"
