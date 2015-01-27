@@ -42,7 +42,7 @@
         "check-invalid-reads": false
     },
     "namespace": "phelper",
-    "name": "Phalcon Helpers",
+    "name": "phelper",
     "description": "Phalcon Helpers written in Zephir",
     "author": "Serghei Iakovlev",
     "version": "0.0.1-dev",

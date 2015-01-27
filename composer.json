@@ -7,7 +7,8 @@
     "phalcon",
     "zephir",
     "utils",
-    "helper"
+    "helper",
+    "extension"
   ],
   "homepage": "https://github.com/sergeyklay/phelper",
   "license": "LGPL-2.1",
