@@ -126,7 +126,7 @@ class Utf8
 
         if this->_mbSupport {
             return (length === null)
-                ? mb_substr(text, offset, mb_strlen(text), this->_encoding)
+                ? mb_substr(text, offset, mb_strlen(text, this->_encoding), this->_encoding)
                 : mb_substr(text, offset, length, this->_encoding);
         }
 
