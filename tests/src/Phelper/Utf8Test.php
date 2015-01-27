@@ -36,6 +36,9 @@ use Phelper\Utf8;
  */
 class Utf8Test extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Utf8
+     */
     protected $utf;
     protected $oldConfig;
 
@@ -62,9 +65,9 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     public function asciiProvider()
     {
         return array(
-            array("\0", true),
-            array("\$Pha\r", true),
-            array('Phålcón', false),
+            array("\0",                 true),
+            array("\$Pha\r",            true),
+            array('Phålcón',            false),
             array(array('Phal', 'con'), true),
             array(array('Phål', 'cón'), false),
         );
@@ -103,10 +106,10 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     public function substrProvider()
     {
         return array(
-            array('Phålcón', 3, 2, 'lc'),
-            array('Phålcón', 3, 9, 'lcón'),
+            array('Phålcón', 3, 2,    'lc'),
+            array('Phålcón', 3, 9,    'lcón'),
             array('Phålcón', 3, null, 'lcón'),
-            array('Phålcón', 3, -2, 'lc'),
+            array('Phålcón', 3, -2,   'lc'),
         );
     }
 
@@ -125,12 +128,12 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     public function stripAsciiCtrlProvider()
     {
         return array(
-            array("\0\021\x7F", ''),
-            array("\0I ♥ Phålcón", 'I ♥ Phålcón'),
+            array("\0\021\x7F",      ''),
+            array("\0I ♥ Phålcón",   'I ♥ Phålcón'),
             array("I ♥ Phålcón\021", 'I ♥ Phålcón'),
-            array("\x7FI ♥ Phalcon", "I ♥ Phalcon"),
-            array("\x41", "A"),
-            array("\xFF", "\xFF"),
+            array("\x7FI ♥ Phalcon", 'I ♥ Phalcon'),
+            array("\x41",            'A'),
+            array("\xFF",            "\xFF"),
         );
     }
 
@@ -145,19 +148,41 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     /**
      * Provides test data for testStripNonAscii()
      */
-    public function cstripNonAsciiProvider()
+    public function stripNonAsciiProvider()
     {
         return array(
-            array('Phålcón', 'Phlcn'),
+            array('Phålcón',     'Phlcn'),
             array("I ♥ Phalcon", 'I  Phalcon'),
         );
     }
 
     /**
-     * @dataProvider cstripNonAsciiProvider
+     * @dataProvider stripNonAsciiProvider
      */
     public function testStripNonAscii($input, $expected)
     {
         $this->assertSame($expected, $this->utf->stripNonAscii($input));
+    }
+
+    /**
+     * Provides test data for testLtrim()
+     */
+    public function ltrimProvider()
+    {
+        return array(
+            array(' bar ', null,            'bar '),
+            array(' bar ', false,           'bar '),
+            array('ålcó',  array('å', 'l'), 'có'),
+            array('alco',  'b',             'lco'),
+            array('ålcó',  'å',             'lcó'),
+        );
+    }
+
+    /**
+     * @dataProvider ltrimProvider
+     */
+    public function testLtrim($input, $charList, $expected)
+    {
+        $this->assertSame($expected, $this->utf->ltrim($input, $charList));
     }
 }

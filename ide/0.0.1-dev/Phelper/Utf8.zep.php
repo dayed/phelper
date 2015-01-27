@@ -84,4 +84,18 @@ class Utf8
      */
 	public function stripNonAscii($text) {}
 
+    /**
+     * Strips whitespace (or other UTF-8 characters) from the beginning of a string.
+     * This is a UTF8-aware version of [ltrim](http://php.net/ltrim).
+     * <code>
+     * $string = $utf->ltrim($string);
+     * </code>
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string $text Input string
+     * @param string $charList String of characters to remove
+     * @return string 
+     */
+	public function ltrim($text, $charList = null) {}
+
 }

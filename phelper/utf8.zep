@@ -211,4 +211,35 @@ class Utf8
     {
         return preg_replace("#[^\x00-\x7F]+#S", "", text);
     }
+
+    /**
+     * Strips whitespace (or other UTF-8 characters) from the beginning of a string.
+     * This is a UTF8-aware version of [ltrim](http://php.net/ltrim).
+     *
+     * <code>
+     * $string = $utf->ltrim($string);
+     * </code>
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string text Input string
+     * @param string charList String of characters to remove
+     */
+    public function ltrim(string! text, var charList = null) ->string
+    {
+        if charList === null || charList === false {
+            return text->trimleft();
+        }
+
+        if this->isAscii(text) {
+            return text->trimleft(charList);
+        }
+
+        if typeof charList == "array" {
+            let charList = join("", charList);
+        }
+
+        let charList = preg_replace("#[-\[\]:\\\\^/]#", "\\\\$0", charList);
+
+        return preg_replace("/^[" . charList . "]+/u", "", text);
+    }
 }
