@@ -131,7 +131,7 @@ PHP_METHOD(Phelper_Utf8, __construct) {
  * This is used to determine when to use native functions or UTF-8 functions.
  *
  * <code>
- *   $ascii = $utf->isAscii($str);
+ * $ascii = $utf->isAscii($string);
  * </code>
  *
  * @param mixed text String or array of strings to check
@@ -167,7 +167,7 @@ PHP_METHOD(Phelper_Utf8, isAscii) {
  * This is a UTF8-aware version of [strlen](http://php.net/strlen).
  *
  * <code>
- *   $length = $utf->strlen($str);
+ * $length = $utf->strlen($string);
  * </code>
  *
  * @param string text String being measured for length
@@ -219,7 +219,7 @@ PHP_METHOD(Phelper_Utf8, strlen) {
  * This is a UTF8-aware version of [substr](http://php.net/substr).
  *
  * <code>
- *  $sub = $utf->substr($string, $offset);
+ * $sub = $utf->substr($string, $offset);
  * </code>
  */
 PHP_METHOD(Phelper_Utf8, substr) {

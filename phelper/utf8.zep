@@ -71,7 +71,7 @@ class Utf8
      * This is used to determine when to use native functions or UTF-8 functions.
      *
      * <code>
-     *   $ascii = $utf->isAscii($str);
+     * $ascii = $utf->isAscii($string);
      * </code>
      *
      * @param mixed text String or array of strings to check
@@ -90,7 +90,7 @@ class Utf8
      * This is a UTF8-aware version of [strlen](http://php.net/strlen).
      *
      * <code>
-     *   $length = $utf->strlen($str);
+     * $length = $utf->strlen($string);
      * </code>
      *
      * @param string text String being measured for length
@@ -113,7 +113,7 @@ class Utf8
      * This is a UTF8-aware version of [substr](http://php.net/substr).
      *
      * <code>
-     *  $sub = $utf->substr($string, $offset);
+     * $sub = $utf->substr($string, $offset);
      * </code>
      */
     public function substr(string! text, int! offset, var length=null) ->string

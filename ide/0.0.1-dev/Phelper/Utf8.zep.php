@@ -28,7 +28,7 @@ class Utf8
      * Tests whether a string contains only 7-bit ASCII bytes.
      * This is used to determine when to use native functions or UTF-8 functions.
      * <code>
-     * $ascii = $utf->isAscii($str);
+     * $ascii = $utf->isAscii($string);
      * </code>
      *
      * @param mixed $text String or array of strings to check
@@ -40,7 +40,7 @@ class Utf8
      * Get string length.
      * This is a UTF8-aware version of [strlen](http://php.net/strlen).
      * <code>
-     * $length = $utf->strlen($str);
+     * $length = $utf->strlen($string);
      * </code>
      *
      * @param string $text String being measured for length
