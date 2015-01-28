@@ -125,19 +125,19 @@ class Utf8
             y = 0;
 
         if this->_mbSupport {
-            return (length === null)
+            return (typeof length === "null")
                 ? mb_substr(text, offset, mb_strlen(text, this->_encoding), this->_encoding)
                 : mb_substr(text, offset, length, this->_encoding);
         }
 
         if this->isAscii(text) {
-            return (length === null) ? substr(text, offset) : substr(text, offset, length);
+            return (typeof length === "null") ? substr(text, offset) : substr(text, offset, length);
         }
 
         // Normalize params
         let stringLen = this->strlen(text);
         let offset = (offset < 0) ? max(0, stringLen + offset) : intval(offset);
-        let length = (length === null) ? null : intval(length);
+        let length = (typeof length === "null") ? null : intval(length);
 
         // Impossible
         if length === 0 || offset >= stringLen || (length < 0 && length <= offset - stringLen) {
@@ -145,7 +145,7 @@ class Utf8
         }
 
         // Whole string
-        if offset == 0 && (length === null || length >= stringLen) {
+        if offset == 0 && (typeof length === "null" || length >= stringLen) {
             return text;
         }
 
@@ -163,7 +163,7 @@ class Utf8
         }
 
         // Create a length expression
-        if length === null {
+        if typeof length === "null" {
             // No length set, grab it all
             let regex .= "(.*)";
         } elseif length > 0 {
@@ -222,11 +222,11 @@ class Utf8
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param string text Input string
-     * @param string charList String of characters to remove
+     * @param string charList String of characters (or array of chars) to remove
      */
     public function ltrim(string! text, var charList = null) ->string
     {
-        if charList === null || charList === false {
+        if typeof charList === "null" || charList === false {
             return text->trimleft();
         }
 
@@ -241,5 +241,36 @@ class Utf8
         let charList = preg_replace("#[-\[\]:\\\\^/]#", "\\\\$0", charList);
 
         return preg_replace("/^[" . charList . "]+/u", "", text);
+    }
+
+    /**
+     * Strips whitespace (or other UTF-8 characters) from the end of a string.
+     * This is a UTF8-aware version of [rtrim](http://php.net/rtrim).
+     *
+     * <code>
+     * $string = $utf->rtrim($string);
+     * </code>
+     *
+     * @@author Harry Fuecks <hfuecks@gmail.com>
+     * @param string text Input string
+     * @param string charList String of characters (or array of chars) to remove
+     */
+    public function rtrim(string! text, var charList = null) ->string
+    {
+        if typeof charList === "null" || charList === false {
+            return text->trimright();
+        }
+
+        if this->isAscii(text) {
+            return text->trimright(charList);
+        }
+
+        if typeof charList == "array" {
+            let charList = join("", charList);
+        }
+
+        let charList = preg_replace("#[-\[\]:\\\\^/]#", "\\\\$0", charList);
+
+        return preg_replace("/[" . charList . "]++$/uD", "", text);
     }
 }

@@ -185,4 +185,26 @@ class Utf8Test extends PHPUnit_Framework_TestCase
     {
         $this->assertSame($expected, $this->utf->ltrim($input, $charList));
     }
+
+    /**
+     * Provides test data for test_rtrim()
+     */
+    public function rtrimProvider()
+    {
+        return array(
+            array(' bar ', null,            ' bar'),
+            array(' bar ', false,           ' bar'),
+            array('ålcó',  array('ó', 'c'), 'ål'),
+            array('alco',  'a',             'alco'),
+            array('ålcó',  'ó',             'ålc'),
+        );
+    }
+
+    /**
+     * @dataProvider rtrimProvider
+     */
+    public function testRtrim($input, $charList, $expected)
+    {
+        $this->assertSame($expected, $this->utf->rtrim($input, $charList));
+    }
 }

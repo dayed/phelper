@@ -93,9 +93,23 @@ class Utf8
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param string $text Input string
-     * @param string $charList String of characters to remove
+     * @param string $charList String of characters (or array of chars) to remove
      * @return string 
      */
 	public function ltrim($text, $charList = null) {}
+
+    /**
+     * Strips whitespace (or other UTF-8 characters) from the end of a string.
+     * This is a UTF8-aware version of [rtrim](http://php.net/rtrim).
+     * <code>
+     * $string = $utf->rtrim($string);
+     * </code>
+     *
+     * @@author Harry Fuecks <hfuecks@gmail.com>
+     * @param string $text Input string
+     * @param string $charList String of characters (or array of chars) to remove
+     * @return string 
+     */
+	public function rtrim($text, $charList = null) {}
 
 }

@@ -546,7 +546,7 @@ PHP_METHOD(Phelper_Utf8, stripNonAscii) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param string text Input string
- * @param string charList String of characters to remove
+ * @param string charList String of characters (or array of chars) to remove
  */
 PHP_METHOD(Phelper_Utf8, ltrim) {
 
@@ -609,6 +609,88 @@ PHP_METHOD(Phelper_Utf8, ltrim) {
 	ZEPHIR_CPY_WRT(charList, _4);
 	ZEPHIR_INIT_VAR(_6);
 	ZEPHIR_CONCAT_SVS(_6, "/^[", charList, "]+/u");
+	ZEPHIR_INIT_NVAR(_1);
+	ZVAL_STRING(_1, "", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", &_5, _6, _1, text);
+	zephir_check_temp_parameter(_1);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Strips whitespace (or other UTF-8 characters) from the end of a string.
+ * This is a UTF8-aware version of [rtrim](http://php.net/rtrim).
+ *
+ * <code>
+ * $string = $utf->rtrim($string);
+ * </code>
+ *
+ * @@author Harry Fuecks <hfuecks@gmail.com>
+ * @param string text Input string
+ * @param string charList String of characters (or array of chars) to remove
+ */
+PHP_METHOD(Phelper_Utf8, rtrim) {
+
+	zephir_nts_static zephir_fcall_cache_entry *_5 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zend_bool _0;
+	zval *text_param = NULL, *charList = NULL, *_1 = NULL, *_2 = NULL, *_3, *_4 = NULL, *_6;
+	zval *text = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 1, &text_param, &charList);
+
+	if (unlikely(Z_TYPE_P(text_param) != IS_STRING && Z_TYPE_P(text_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'text' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(text_param) == IS_STRING)) {
+		zephir_get_strval(text, text_param);
+	} else {
+		ZEPHIR_INIT_VAR(text);
+		ZVAL_EMPTY_STRING(text);
+	}
+	if (!charList) {
+		ZEPHIR_CPY_WRT(charList, ZEPHIR_GLOBAL(global_null));
+	} else {
+		ZEPHIR_SEPARATE_PARAM(charList);
+	}
+
+
+	_0 = Z_TYPE_P(charList) == IS_NULL;
+	if (!(_0)) {
+		_0 = ZEPHIR_IS_FALSE_IDENTICAL(charList);
+	}
+	if (_0) {
+		ZEPHIR_INIT_VAR(_1);
+		zephir_fast_trim(_1, text, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
+		RETURN_CCTOR(_1);
+	}
+	ZEPHIR_CALL_METHOD(&_2, this_ptr, "isascii", NULL, text);
+	zephir_check_call_status();
+	if (zephir_is_true(_2)) {
+		ZEPHIR_INIT_NVAR(_1);
+		zephir_fast_trim(_1, text, charList, ZEPHIR_TRIM_RIGHT TSRMLS_CC);
+		RETURN_CCTOR(_1);
+	}
+	if (Z_TYPE_P(charList) == IS_ARRAY) {
+		ZEPHIR_INIT_NVAR(_1);
+		zephir_fast_join_str(_1, SL(""), charList TSRMLS_CC);
+		ZEPHIR_CPY_WRT(charList, _1);
+	}
+	ZEPHIR_INIT_NVAR(_1);
+	ZVAL_STRING(_1, "#[-\\[\\]:\\\\^/]#", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_VAR(_3);
+	ZVAL_STRING(_3, "\\\\$0", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_FUNCTION(&_4, "preg_replace", &_5, _1, _3, charList);
+	zephir_check_temp_parameter(_1);
+	zephir_check_temp_parameter(_3);
+	zephir_check_call_status();
+	ZEPHIR_CPY_WRT(charList, _4);
+	ZEPHIR_INIT_VAR(_6);
+	ZEPHIR_CONCAT_SVS(_6, "/[", charList, "]++$/uD");
 	ZEPHIR_INIT_NVAR(_1);
 	ZVAL_STRING(_1, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_RETURN_CALL_FUNCTION("preg_replace", &_5, _6, _1, text);
