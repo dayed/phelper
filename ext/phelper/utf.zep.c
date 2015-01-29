@@ -705,6 +705,7 @@ PHP_METHOD(Phelper_Utf, rtrim) {
  * Case-insensitive UTF version of strstr.
  * Returns part of haystack string from the first occurrence of needle to the end of haystack.
  * This is a UTF-aware version of [stristr](http://php.net/stristr).
+ * Returns the portion of string, or FALSE if needle is not found.
  *
  * <code>
  * $found = $utf->stristr($string, $search);
@@ -754,7 +755,8 @@ PHP_METHOD(Phelper_Utf, stristr) {
 /**
  * UTF version of strstr.
  * Returns part of haystack string from the first occurrence of needle to the end of haystack.
- * This is a UTF-aware version of [stristr](http://php.net/stristr).
+ * This is a UTF-aware version of [stristr](http://php.net/strstr).
+ * Returns the portion of string, or FALSE if needle is not found.
  *
  * <code>
  * $found = $utf->strstr($string, $search);
@@ -768,11 +770,11 @@ PHP_METHOD(Phelper_Utf, stristr) {
  */
 PHP_METHOD(Phelper_Utf, strstr) {
 
-	zephir_nts_static zephir_fcall_cache_entry *_5 = NULL, *_8 = NULL;
+	zephir_nts_static zephir_fcall_cache_entry *_4 = NULL, *_5 = NULL, *_8 = NULL, *_11 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *matches;
 	zend_bool beforeNeedle, caseInsensitive, _1;
-	zval *stack_param = NULL, *needle, *beforeNeedle_param = NULL, *caseInsensitive_param = NULL, *_0 = NULL, *_2 = NULL, _3, *_4 = NULL, *_6 = NULL, *_7, *_9, *_10 = NULL;
+	zval *stack_param = NULL, *needle, *beforeNeedle_param = NULL, *caseInsensitive_param = NULL, *_0 = NULL, *_2 = NULL, *_3 = NULL, _6, *_7 = NULL, *_9 = NULL, *_10, *_12, *_13 = NULL;
 	zval *stack = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -812,38 +814,46 @@ PHP_METHOD(Phelper_Utf, strstr) {
 		_1 = zephir_is_true(_2);
 	}
 	if (_1) {
-		RETURN_MM_STRING("", 1);
+		ZEPHIR_INIT_VAR(_3);
+		if (caseInsensitive) {
+			ZEPHIR_CALL_FUNCTION(&_3, "stristr", &_4, stack, needle, (beforeNeedle ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false)));
+			zephir_check_call_status();
+		} else {
+			ZEPHIR_CALL_FUNCTION(&_3, "strstr", &_5, stack, needle, (beforeNeedle ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false)));
+			zephir_check_call_status();
+		}
+		RETURN_CCTOR(_3);
 	}
 	if (ZEPHIR_IS_STRING(needle, "")) {
 		RETURN_MM_BOOL(0);
 	}
-	ZEPHIR_SINIT_VAR(_3);
-	ZVAL_STRING(&_3, "/", 0);
-	ZEPHIR_CALL_FUNCTION(&_4, "preg_quote", &_5, needle, &_3);
+	ZEPHIR_SINIT_VAR(_6);
+	ZVAL_STRING(&_6, "/", 0);
+	ZEPHIR_CALL_FUNCTION(&_7, "preg_quote", &_8, needle, &_6);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_6);
+	ZEPHIR_INIT_VAR(_9);
 	if (caseInsensitive) {
-		ZEPHIR_INIT_NVAR(_6);
-		ZVAL_STRING(_6, "i", 1);
+		ZEPHIR_INIT_NVAR(_9);
+		ZVAL_STRING(_9, "i", 1);
 	} else {
-		ZEPHIR_INIT_NVAR(_6);
-		ZVAL_STRING(_6, "", 1);
+		ZEPHIR_INIT_NVAR(_9);
+		ZVAL_STRING(_9, "", 1);
 	}
-	ZEPHIR_INIT_VAR(_7);
-	ZEPHIR_CONCAT_SVSV(_7, "/^(.*?)", _4, "/us", _6);
+	ZEPHIR_INIT_VAR(_10);
+	ZEPHIR_CONCAT_SVSV(_10, "/^(.*?)", _7, "/us", _9);
 	Z_SET_ISREF_P(matches);
-	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_8, _7, stack, matches);
+	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_11, _10, stack, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
 	if (zephir_array_isset_long(matches, 1)) {
 		if (beforeNeedle) {
-			zephir_array_fetch_long(&_9, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 329 TSRMLS_CC);
-			RETURN_CTOR(_9);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 330 TSRMLS_CC);
+			RETURN_CTOR(_12);
 		} else {
-			zephir_array_fetch_long(&_9, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 331 TSRMLS_CC);
-			ZEPHIR_CALL_METHOD(&_10, this_ptr, "strlen", NULL, _9);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 332 TSRMLS_CC);
+			ZEPHIR_CALL_METHOD(&_13, this_ptr, "strlen", NULL, _12);
 			zephir_check_call_status();
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _10);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _13);
 			zephir_check_call_status();
 			RETURN_MM();
 		}

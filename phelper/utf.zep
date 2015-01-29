@@ -279,6 +279,7 @@ class Utf
      * Case-insensitive UTF version of strstr.
      * Returns part of haystack string from the first occurrence of needle to the end of haystack.
      * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     * Returns the portion of string, or FALSE if needle is not found.
      *
      * <code>
      * $found = $utf->stristr($string, $search);
@@ -297,7 +298,8 @@ class Utf
     /**
      * UTF version of strstr.
      * Returns part of haystack string from the first occurrence of needle to the end of haystack.
-     * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     * This is a UTF-aware version of [stristr](http://php.net/strstr).
+     * Returns the portion of string, or FALSE if needle is not found.
      *
      * <code>
      * $found = $utf->strstr($string, $search);
