@@ -15,11 +15,11 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/object.h"
-#include "kernel/string.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
 #include "kernel/operators.h"
 #include "kernel/concat.h"
+#include "kernel/string.h"
+#include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/array.h"
 
 
@@ -80,7 +80,7 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
 	zend_declare_property_bool(phelper_utf_ce, SL("_mbSupport"), 0, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
-	 * Encoding using in mb_* functions
+	 * Current encoding (also using in mb_* functions)
 	 * @var string
 	 */
 	zend_declare_property_string(phelper_utf_ce, SL("_encoding"), "utf-8", ZEND_ACC_PROTECTED TSRMLS_CC);
@@ -97,13 +97,15 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
 
 /**
  * Class constructor
- * @param string encoding Encoding using in mb_* functions
+ *
+ * @param string encoding Current encoding (also using in mb_* functions). By default uset UTF-8. [Optional]
+ * @throws \Exception When not supported encoding
  */
 PHP_METHOD(Phelper_Utf, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
-	zval *encoding_param = NULL, _0, *_1 = NULL, *_3;
+	zval *encoding_param = NULL, _0, *_1 = NULL;
 	zval *encoding = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -113,6 +115,38 @@ PHP_METHOD(Phelper_Utf, __construct) {
 		ZEPHIR_INIT_VAR(encoding);
 		ZVAL_STRING(encoding, "utf-8", 1);
 	} else {
+		zephir_get_strval(encoding, encoding_param);
+	}
+
+
+	ZEPHIR_SINIT_VAR(_0);
+	ZVAL_STRING(&_0, "mbstring", 0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", &_2, &_0);
+	zephir_check_call_status();
+	zephir_update_property_this(this_ptr, SL("_mbSupport"), _1 TSRMLS_CC);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "setencoding", NULL, encoding);
+	zephir_check_call_status();
+	ZEPHIR_MM_RESTORE();
+
+}
+
+/**
+ * Set current encoding
+ *
+ * @param string encoding Current encoding (also using in mb_* functions)
+ * @throws \Exception When not supported encoding
+ * @return \Phelper\Utf
+ */
+PHP_METHOD(Phelper_Utf, setEncoding) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_6 = NULL;
+	zval *encoding_param = NULL, *_0, *_1, _2, _3, *_4, *_5 = NULL, *_7;
+	zval *encoding = NULL, *className = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &encoding_param);
+
 	if (unlikely(Z_TYPE_P(encoding_param) != IS_STRING && Z_TYPE_P(encoding_param) != IS_NULL)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'encoding' must be a string") TSRMLS_CC);
 		RETURN_MM_NULL();
@@ -124,18 +158,42 @@ PHP_METHOD(Phelper_Utf, __construct) {
 		ZEPHIR_INIT_VAR(encoding);
 		ZVAL_EMPTY_STRING(encoding);
 	}
-	}
 
 
-	ZEPHIR_SINIT_VAR(_0);
-	ZVAL_STRING(&_0, "mbstring", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", &_2, &_0);
+	ZEPHIR_INIT_VAR(className);
+	ZEPHIR_CONCAT_SSS(className, "Phelper", "\\", "Utf");
+	ZEPHIR_INIT_VAR(_0);
+	ZEPHIR_INIT_VAR(_1);
+	ZEPHIR_SINIT_VAR(_2);
+	ZVAL_STRING(&_2, "-", 0);
+	ZEPHIR_SINIT_VAR(_3);
+	ZVAL_STRING(&_3, "_", 0);
+	zephir_fast_str_replace(_1, &_2, &_3, encoding TSRMLS_CC);
+	zephir_fast_strtoupper(_0, _1);
+	ZEPHIR_INIT_VAR(_4);
+	ZEPHIR_CONCAT_VSV(_4, className, "::", _0);
+	ZEPHIR_CALL_FUNCTION(&_5, "defined", &_6, _4);
 	zephir_check_call_status();
-	zephir_update_property_this(this_ptr, SL("_mbSupport"), _1 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_3);
-	zephir_fast_strtolower(_3, encoding);
-	zephir_update_property_this(this_ptr, SL("_encoding"), _3 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
+	if (!(zephir_is_true(_5))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Invalid encoding. Support only: utf-8, utf-16 and utf-32", "phelper/utf.zep", 96);
+		return;
+	}
+	ZEPHIR_INIT_VAR(_7);
+	zephir_fast_strtolower(_7, encoding);
+	zephir_update_property_this(this_ptr, SL("_encoding"), _7 TSRMLS_CC);
+	RETURN_THIS();
+
+}
+
+/**
+ * Get current encoding
+ *
+ * @return string
+ */
+PHP_METHOD(Phelper_Utf, getEncoding) {
+
+
+	RETURN_MEMBER(this_ptr, "_encoding");
 
 }
 
@@ -556,7 +614,7 @@ PHP_METHOD(Phelper_Utf, substr) {
 	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_24, _20, text, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 228 TSRMLS_CC);
+	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 263 TSRMLS_CC);
 	RETURN_CTOR(_25);
 
 }
@@ -955,10 +1013,10 @@ PHP_METHOD(Phelper_Utf, strstr) {
 	zephir_check_call_status();
 	if (zephir_array_isset_long(matches, 1)) {
 		if (beforeNeedle) {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 369 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 404 TSRMLS_CC);
 			RETURN_CTOR(_12);
 		} else {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 371 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 406 TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_13, this_ptr, "strlen", NULL, _12);
 			zephir_check_call_status();
 			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _13);

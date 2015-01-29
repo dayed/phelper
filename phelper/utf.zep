@@ -61,19 +61,54 @@ class Utf
     protected _mbSupport = false;
 
     /**
-     * Encoding using in mb_* functions
+     * Current encoding (also using in mb_* functions)
      * @var string
      */
     protected _encoding = Utf::UTF_8;
 
     /**
      * Class constructor
-     * @param string encoding Encoding using in mb_* functions
+     *
+     * @param string encoding Current encoding (also using in mb_* functions). By default uset UTF-8. [Optional]
+     * @throws \Exception When not supported encoding
      */
-    public function __construct(string! encoding = Utf::UTF_8)
+    public function __construct(string encoding = Utf::UTF_8)
     {
         let this->_mbSupport = extension_loaded("mbstring");
+
+        this->setEncoding(encoding);
+    }
+
+    /**
+     * Set current encoding
+     *
+     * @param string encoding Current encoding (also using in mb_* functions)
+     * @throws \Exception When not supported encoding
+     * @return \Phelper\Utf
+     */
+    public function setEncoding(string! encoding) -> <Phelper\Utf>
+    {
+        string className;
+
+        let className = __NAMESPACE__ ."\\". __CLASS__;
+
+        if !defined(className . "::" . strtoupper(str_replace("-", "_", encoding))) {
+            throw "Invalid encoding. Support only: utf-8, utf-16 and utf-32";
+        }
+
         let this->_encoding = strtolower(encoding);
+
+        return this;
+    }
+
+    /**
+     * Get current encoding
+     *
+     * @return string
+     */
+    public function getEncoding() -> string
+    {
+        return this->_encoding;
     }
 
     /**

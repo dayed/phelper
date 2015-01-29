@@ -36,17 +36,34 @@ class Utf
     protected $_mbSupport = false;
 
     /**
-     * Encoding using in mb_* functions
+     * Current encoding (also using in mb_* functions)
      * @var string
      */
-    protected $_encoding = Utf::UTF_8;
+    protected $_encoding = null;
 
     /**
      * Class constructor
      *
-     * @param string $encoding Encoding using in mb_* functions
+     * @param string $encoding Current encoding (also using in mb_* functions). By default uset UTF-8. [Optional]
+     * @throws \Exception When not supported encoding
      */
-    public function __construct($encoding = Utf::UTF_8) {}
+    public function __construct($encoding = null) {}
+
+    /**
+     * Set current encoding
+     *
+     * @param string $encoding Current encoding (also using in mb_* functions)
+     * @throws \Exception When not supported encoding
+     * @return \Phelper\Utf
+     */
+    public function setEncoding($encoding)
+
+    /**
+     * Get current encoding
+     *
+     * @return string
+     */
+    public function getEncoding()
 
     /**
      * Get a BOM (Byte Order Mark).
