@@ -87,8 +87,9 @@ class UtfTest extends PHPUnit_Framework_TestCase
     public function strlenProvider()
     {
         return array(
-            array('Phålcón', 7),
-            array('Phalcon', 7),
+            array('Phålcón',                     7),
+            array('Phalcon',                     7),
+            array('나는 유리를 먹을 수 있어요. 그래도', 20),
         );
     }
 
