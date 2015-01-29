@@ -701,3 +701,154 @@ PHP_METHOD(Phelper_Utf, rtrim) {
 
 }
 
+/**
+ * Case-insensitive UTF version of strstr.
+ * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+ * This is a UTF-aware version of [stristr](http://php.net/stristr).
+ *
+ * <code>
+ * $found = $utf->stristr($string, $search);
+ * </code>
+ *
+ * @param string haystack The input string.
+ * @param string needle Needle.
+ * @param boolean beforeNeedle [Optional]
+ * @return mixed matched substring if found or false if the substring was not found
+ */
+PHP_METHOD(Phelper_Utf, stristr) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zend_bool beforeNeedle;
+	zval *stack_param = NULL, *needle, *beforeNeedle_param = NULL, *_0;
+	zval *stack = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 1, &stack_param, &needle, &beforeNeedle_param);
+
+	if (unlikely(Z_TYPE_P(stack_param) != IS_STRING && Z_TYPE_P(stack_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'stack' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(stack_param) == IS_STRING)) {
+		zephir_get_strval(stack, stack_param);
+	} else {
+		ZEPHIR_INIT_VAR(stack);
+		ZVAL_EMPTY_STRING(stack);
+	}
+	if (!beforeNeedle_param) {
+		beforeNeedle = 0;
+	} else {
+		beforeNeedle = zephir_get_boolval(beforeNeedle_param);
+	}
+
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_BOOL(_0, 1);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "strstr", NULL, stack, needle, (beforeNeedle ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false)), _0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * UTF version of strstr.
+ * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+ * This is a UTF-aware version of [stristr](http://php.net/stristr).
+ *
+ * <code>
+ * $found = $utf->strstr($string, $search);
+ * </code>
+ *
+ * @param string haystack The input string.
+ * @param string needle Needle.
+ * @param boolean beforeNeedle If TRUE returns the part of the haystack before the first occurrence of the needle (excluding the needle). [Optional]
+ * @param boolean caseInsensitive Case insensitive? [Optional]
+ * @return mixed matched substring if found or FALSE if the substring was not found
+ */
+PHP_METHOD(Phelper_Utf, strstr) {
+
+	zephir_nts_static zephir_fcall_cache_entry *_5 = NULL, *_8 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *matches;
+	zend_bool beforeNeedle, caseInsensitive, _1;
+	zval *stack_param = NULL, *needle, *beforeNeedle_param = NULL, *caseInsensitive_param = NULL, *_0 = NULL, *_2 = NULL, _3, *_4 = NULL, *_6 = NULL, *_7, *_9, *_10 = NULL;
+	zval *stack = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 2, &stack_param, &needle, &beforeNeedle_param, &caseInsensitive_param);
+
+	if (unlikely(Z_TYPE_P(stack_param) != IS_STRING && Z_TYPE_P(stack_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'stack' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(stack_param) == IS_STRING)) {
+		zephir_get_strval(stack, stack_param);
+	} else {
+		ZEPHIR_INIT_VAR(stack);
+		ZVAL_EMPTY_STRING(stack);
+	}
+	if (!beforeNeedle_param) {
+		beforeNeedle = 0;
+	} else {
+		beforeNeedle = zephir_get_boolval(beforeNeedle_param);
+	}
+	if (!caseInsensitive_param) {
+		caseInsensitive = 0;
+	} else {
+		caseInsensitive = zephir_get_boolval(caseInsensitive_param);
+	}
+	ZEPHIR_INIT_VAR(matches);
+	array_init(matches);
+
+
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isascii", NULL, stack);
+	zephir_check_call_status();
+	_1 = zephir_is_true(_0);
+	if (_1) {
+		ZEPHIR_CALL_METHOD(&_2, this_ptr, "isascii", NULL, needle);
+		zephir_check_call_status();
+		_1 = zephir_is_true(_2);
+	}
+	if (_1) {
+		RETURN_MM_STRING("", 1);
+	}
+	if (ZEPHIR_IS_STRING(needle, "")) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_SINIT_VAR(_3);
+	ZVAL_STRING(&_3, "/", 0);
+	ZEPHIR_CALL_FUNCTION(&_4, "preg_quote", &_5, needle, &_3);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(_6);
+	if (caseInsensitive) {
+		ZEPHIR_INIT_NVAR(_6);
+		ZVAL_STRING(_6, "i", 1);
+	} else {
+		ZEPHIR_INIT_NVAR(_6);
+		ZVAL_STRING(_6, "", 1);
+	}
+	ZEPHIR_INIT_VAR(_7);
+	ZEPHIR_CONCAT_SVSV(_7, "/^(.*?)", _4, "/us", _6);
+	Z_SET_ISREF_P(matches);
+	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_8, _7, stack, matches);
+	Z_UNSET_ISREF_P(matches);
+	zephir_check_call_status();
+	if (zephir_array_isset_long(matches, 1)) {
+		if (beforeNeedle) {
+			zephir_array_fetch_long(&_9, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 329 TSRMLS_CC);
+			RETURN_CTOR(_9);
+		} else {
+			zephir_array_fetch_long(&_9, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 331 TSRMLS_CC);
+			ZEPHIR_CALL_METHOD(&_10, this_ptr, "strlen", NULL, _9);
+			zephir_check_call_status();
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _10);
+			zephir_check_call_status();
+			RETURN_MM();
+		}
+	}
+	RETURN_MM_BOOL(0);
+
+}
+

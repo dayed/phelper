@@ -11,6 +11,8 @@ PHP_METHOD(Phelper_Utf, stripAsciiCtrl);
 PHP_METHOD(Phelper_Utf, stripNonAscii);
 PHP_METHOD(Phelper_Utf, ltrim);
 PHP_METHOD(Phelper_Utf, rtrim);
+PHP_METHOD(Phelper_Utf, stristr);
+PHP_METHOD(Phelper_Utf, strstr);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phelper_utf___construct, 0, 0, 0)
 	ZEND_ARG_INFO(0, encoding)
@@ -48,6 +50,19 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phelper_utf_rtrim, 0, 0, 1)
 	ZEND_ARG_INFO(0, charList)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phelper_utf_stristr, 0, 0, 2)
+	ZEND_ARG_INFO(0, stack)
+	ZEND_ARG_INFO(0, needle)
+	ZEND_ARG_INFO(0, beforeNeedle)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phelper_utf_strstr, 0, 0, 2)
+	ZEND_ARG_INFO(0, stack)
+	ZEND_ARG_INFO(0, needle)
+	ZEND_ARG_INFO(0, beforeNeedle)
+	ZEND_ARG_INFO(0, caseInsensitive)
+ZEND_END_ARG_INFO()
+
 ZEPHIR_INIT_FUNCS(phelper_utf_method_entry) {
 	PHP_ME(Phelper_Utf, __construct, arginfo_phelper_utf___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Phelper_Utf, isAscii, arginfo_phelper_utf_isascii, ZEND_ACC_PUBLIC)
@@ -57,5 +72,7 @@ ZEPHIR_INIT_FUNCS(phelper_utf_method_entry) {
 	PHP_ME(Phelper_Utf, stripNonAscii, arginfo_phelper_utf_stripnonascii, ZEND_ACC_PUBLIC)
 	PHP_ME(Phelper_Utf, ltrim, arginfo_phelper_utf_ltrim, ZEND_ACC_PUBLIC)
 	PHP_ME(Phelper_Utf, rtrim, arginfo_phelper_utf_rtrim, ZEND_ACC_PUBLIC)
+	PHP_ME(Phelper_Utf, stristr, arginfo_phelper_utf_stristr, ZEND_ACC_PUBLIC)
+	PHP_ME(Phelper_Utf, strstr, arginfo_phelper_utf_strstr, ZEND_ACC_PUBLIC)
   PHP_FE_END
 };

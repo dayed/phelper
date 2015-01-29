@@ -266,12 +266,71 @@ class Utf
             return text->trimright(charList);
         }
 
-        if typeof charList == "array" {
+        if typeof charList === "array" {
             let charList = join("", charList);
         }
 
         let charList = preg_replace("#[-\[\]:\\\\^/]#", "\\\\$0", charList);
 
         return preg_replace("/[" . charList . "]++$/uD", "", text);
+    }
+
+    /**
+     * Case-insensitive UTF version of strstr.
+     * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+     * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     *
+     * <code>
+     * $found = $utf->stristr($string, $search);
+     * </code>
+     *
+     * @param string haystack The input string.
+     * @param string needle Needle.
+     * @param boolean beforeNeedle [Optional]
+     * @return mixed matched substring if found or false if the substring was not found
+     */
+    public function stristr(string! stack, var needle, boolean beforeNeedle = false)
+    {
+        return this->strstr(stack, needle, beforeNeedle, true);
+    }
+
+    /**
+     * UTF version of strstr.
+     * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+     * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     *
+     * <code>
+     * $found = $utf->strstr($string, $search);
+     * </code>
+     *
+     * @param string haystack The input string.
+     * @param string needle Needle.
+     * @param boolean beforeNeedle If TRUE returns the part of the haystack before the first occurrence of the needle (excluding the needle). [Optional]
+     * @param boolean caseInsensitive Case insensitive? [Optional]
+     * @return mixed matched substring if found or FALSE if the substring was not found
+     */
+    public function strstr(string! stack, var needle, boolean beforeNeedle = false, boolean caseInsensitive = false)
+    {
+        array matches = [];
+
+        if this->isAscii(stack) &&  this->isAscii(needle)  {
+            return caseInsensitive ? stristr(stack, needle, beforeNeedle) : strstr(stack, needle, beforeNeedle);
+        }
+
+        if needle == "" {
+            return false;
+        }
+
+        preg_match("/^(.*?)" . preg_quote(needle, "/") . "/us" . (caseInsensitive ? "i" : ""), stack, matches);
+
+        if isset(matches[1]) {
+            if beforeNeedle {
+                return matches[1];
+            } else {
+                return this->substr(stack, this->strlen(matches[1]));
+            }
+        }
+
+        return false;
     }
 }

@@ -112,4 +112,37 @@ class Utf
      */
 	public function rtrim($text, $charList = null) {}
 
+    /**
+     * Case-insensitive UTF version of strstr.
+     * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+     * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     * <code>
+     * $found = $utf->stristr($string, $search);
+     * </code>
+     *
+     * @param string $stack 
+     * @param string $needle Needle.
+     * @param boolean $beforeNeedle [Optional]
+     * @param string $haystack The input string.
+     * @return mixed substring if found or false if the substring was not found
+     */
+	public function stristr($stack, $needle, $beforeNeedle = false) {}
+
+    /**
+     * UTF version of strstr.
+     * Returns part of haystack string from the first occurrence of needle to the end of haystack.
+     * This is a UTF-aware version of [stristr](http://php.net/stristr).
+     * <code>
+     * $found = $utf->strstr($string, $search);
+     * </code>
+     *
+     * @param string $stack 
+     * @param string $needle Needle.
+     * @param boolean $beforeNeedle If TRUE returns the part of the haystack before the first occurrence of the needle (excluding the needle). [Optional]
+     * @param boolean $caseInsensitive Case insensitive? [Optional]
+     * @param string $haystack The input string.
+     * @return mixed substring if found or FALSE if the substring was not found
+     */
+	public function strstr($stack, $needle, $beforeNeedle = false, $caseInsensitive = false) {}
+
 }

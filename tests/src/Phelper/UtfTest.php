@@ -208,4 +208,48 @@ class UtfTest extends PHPUnit_Framework_TestCase
     {
         $this->assertSame($expected, $this->utf->rtrim($input, $charList));
     }
+
+    /**
+     * Provides test data for testStristr()
+     */
+    public function stristrProvider()
+    {
+        return array(
+            array('I ♥ Phålcón', 'åL', false, 'ålcón'),
+            array('I ♥ Phålcón', 'ål', true,  'I ♥ Ph'),
+            array('I ♥ Phålcón', '♥',  false, '♥ Phålcón'),
+            array('I ♥ Phålcón', 'Ж',  false, false),
+        );
+    }
+
+    /**
+     * @dataProvider stristrProvider
+     */
+    public function testStristr($stack, $needle, $before, $expected)
+    {
+        $this->assertSame($expected, $this->utf->stristr($stack, $needle, $before));
+    }
+
+    /**
+     * Provides test data for testStrstr()
+     */
+    public function strstrProvider()
+    {
+        return array(
+            array('I ♥ Phålcón', 'åL', false, false, false),
+            array('I ♥ Phålcón', 'åL', false, true, 'ålcón'),
+            array('I ♥ Phålcón', 'ål', true,  false, 'I ♥ Ph'),
+            array('I ♥ Phålcón', 'Ål', true,  true, 'I ♥ Ph'),
+            array('I ♥ Phålcón', '♥',  false, false, '♥ Phålcón'),
+            array('I ♥ Phålcón', 'Ж',  false, false, false),
+        );
+    }
+
+    /**
+     * @dataProvider strstrProvider
+     */
+    public function testStrstr($stack, $needle, $before, $case, $expected)
+    {
+        $this->assertSame($expected, $this->utf->strstr($stack, $needle, $before, $case));
+    }
 }
