@@ -26,7 +26,7 @@
 
 
 
-zend_class_entry *phelper_utf8_ce;
+zend_class_entry *phelper_utf_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(phelper)
 
@@ -48,7 +48,7 @@ static PHP_MINIT_FUNCTION(phelper)
 	setlocale(LC_ALL, "C");
 #endif
 
-	ZEPHIR_INIT(Phelper_Utf8);
+	ZEPHIR_INIT(Phelper_Utf);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
@@ -126,7 +126,7 @@ static PHP_MINFO_FUNCTION(phelper)
 
 	php_info_print_table_start();
 	php_info_print_table_header(3, "Component", "Version", "Description");
-	php_info_print_table_row(3, "Utf8", "0.0.1-dev", "Provides multi-byte aware replacement string functions.");
+	php_info_print_table_row(3, "Utf", "0.0.1-dev", "Provides multi-byte aware replacement string functions.");
 	php_info_print_table_end();
 
 }

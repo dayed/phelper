@@ -28,8 +28,9 @@
 namespace Phelper;
 
 /**
- * A port of [phputf8](http://phputf8.sourceforge.net/) to a unified set of files.
  * Provides multi-byte aware replacement string functions.
+ * This class contains some part from port of [phputf8](http://phputf8.sourceforge.net/) to a unified set of files.
+ *
  *
  * For UTF-8 support to work correctly, the following requirements must be met:
  *
@@ -42,10 +43,10 @@ namespace Phelper;
  * @package Phelper
  * @version 0.0.1-dev
  */
-class Utf8
+class Utf
 {
     /**
-     * Does the server support UTF-8 natively?
+     * Does the server support UTF natively?
      * @var boolean
      */
     protected _mbSupport = false;
@@ -68,7 +69,7 @@ class Utf8
 
     /**
      * Tests whether a string contains only 7-bit ASCII bytes.
-     * This is used to determine when to use native functions or UTF-8 functions.
+     * This is used to determine when to use native functions or UTF-functions.
      *
      * <code>
      * $ascii = $utf->isAscii($string);
@@ -109,7 +110,7 @@ class Utf8
     }
 
     /**
-     * Get part of a UTF-8 string.
+     * Get part of a UTF-string.
      * This is a UTF8-aware version of [substr](http://php.net/substr).
      *
      * <code>
@@ -213,7 +214,7 @@ class Utf8
     }
 
     /**
-     * Strips whitespace (or other UTF-8 characters) from the beginning of a string.
+     * Strips whitespace (or other UTF-characters) from the beginning of a string.
      * This is a UTF8-aware version of [ltrim](http://php.net/ltrim).
      *
      * <code>
@@ -244,7 +245,7 @@ class Utf8
     }
 
     /**
-     * Strips whitespace (or other UTF-8 characters) from the end of a string.
+     * Strips whitespace (or other UTF-characters) from the end of a string.
      * This is a UTF8-aware version of [rtrim](http://php.net/rtrim).
      *
      * <code>

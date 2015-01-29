@@ -27,17 +27,17 @@
 namespace Phelper\Tests;
 
 use PHPUnit_Framework_TestCase;
-use Phelper\Utf8;
+use Phelper\Utf;
 
 /**
- * Phelper Utf8 Test
+ * Phelper Utf Test
  *
  * @package Phelper\Tests
  */
-class Utf8Test extends PHPUnit_Framework_TestCase
+class UtfTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Utf8
+     * @var Utf
      */
     protected $utf;
     protected $oldConfig;
@@ -51,7 +51,7 @@ class Utf8Test extends PHPUnit_Framework_TestCase
         $this->oldConfig = ini_get('mbstring.func_overload');
 
         ini_set('mbstring.func_overload', 0);
-        $this->utf = new Utf8;
+        $this->utf = new Utf;
     }
 
     public function tearDown()

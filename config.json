@@ -54,7 +54,7 @@
         {
             "header": ["Component", "Version", "Description"],
             "rows": [
-                ["Utf8", "0.0.1-dev", "Provides multi-byte aware replacement string functions."]
+                ["Utf", "0.0.1-dev", "Provides multi-byte aware replacement string functions."]
             ]
         }
     ]
