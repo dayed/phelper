@@ -2,8 +2,32 @@
 
 namespace Phelper;
 
+/**
+ * Provides multi-byte aware replacement string functions.
+ * This class contains some part from port of [phputf8](http://phputf8.sourceforge.net/) to a unified set of files.
+ *
+ *
+ * For UTF-8 support to work correctly, the following requirements must be met:
+ *
+ * - PCRE needs to be compiled with UTF-8 support (--enable-utf8)
+ * - Support for [Unicode properties](http://php.net/manual/reference.pcre.pattern.modifiers.php)
+ *   is highly recommended (--enable-unicode-properties)
+ * - The [mbstring extension](http://php.net/mbstring) is highly recommended,
+ *   but must not be overloading string functions
+ *
+ * @package Phelper
+ * @version 0.0.1-dev
+ */
 class Utf
 {
+    // Encoding names
+    const UTF_1      = "utf-1";
+    const UTF_7      = "utf-7";
+    const UTF_8      = "utf-8";
+    const UTF_16     = "utf-16";
+    const UTF_32     = "utf-32";
+    const UTF_EBCDIC = "utf-ebcdic";
+
     /**
      * Does the server support UTF natively?
      * @var boolean
@@ -14,14 +38,14 @@ class Utf
      * Encoding using in mb_* functions
      * @var string
      */
-    protected $_encoding = "utf-8";
+    protected $_encoding = Utf::UTF_8;
 
     /**
      * Class constructor
      *
      * @param string $encoding Encoding using in mb_* functions
      */
-    public function __construct($encoding = "utf-8") {}
+    public function __construct($encoding = Utf::UTF_8) {}
 
     /**
      * Tests whether a string contains only 7-bit ASCII bytes.

@@ -45,6 +45,14 @@ namespace Phelper;
  */
 class Utf
 {
+    // Encoding names
+    const UTF_1      = "utf-1";
+    const UTF_7      = "utf-7";
+    const UTF_8      = "utf-8";
+    const UTF_16     = "utf-16";
+    const UTF_32     = "utf-32";
+    const UTF_EBCDIC = "utf-ebcdic";
+
     /**
      * Does the server support UTF natively?
      * @var boolean
@@ -55,16 +63,16 @@ class Utf
      * Encoding using in mb_* functions
      * @var string
      */
-    protected _encoding = "utf-8";
+    protected _encoding = Utf::UTF_8;
 
     /**
      * Class constructor
      * @param string encoding Encoding using in mb_* functions
      */
-    public function __construct(string! encoding="utf-8")
+    public function __construct(string! encoding = Utf::UTF_8)
     {
         let this->_mbSupport = extension_loaded("mbstring");
-        let this->_encoding = encoding;
+        let this->_encoding = strtolower(encoding);
     }
 
     /**

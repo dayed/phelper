@@ -15,10 +15,10 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/object.h"
+#include "kernel/string.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/operators.h"
-#include "kernel/string.h"
 #include "kernel/concat.h"
 #include "kernel/array.h"
 
@@ -81,6 +81,18 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
 	 */
 	zend_declare_property_string(phelper_utf_ce, SL("_encoding"), "utf-8", ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_1"), "utf-1" TSRMLS_CC);
+
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_7"), "utf-7" TSRMLS_CC);
+
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_8"), "utf-8" TSRMLS_CC);
+
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_16"), "utf-16" TSRMLS_CC);
+
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_32"), "utf-32" TSRMLS_CC);
+
+	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_EBCDIC"), "utf-ebcdic" TSRMLS_CC);
+
 	return SUCCESS;
 
 }
@@ -93,7 +105,7 @@ PHP_METHOD(Phelper_Utf, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
-	zval *encoding_param = NULL, _0, *_1 = NULL;
+	zval *encoding_param = NULL, _0, *_1 = NULL, *_3;
 	zval *encoding = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -122,7 +134,9 @@ PHP_METHOD(Phelper_Utf, __construct) {
 	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", &_2, &_0);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("_mbSupport"), _1 TSRMLS_CC);
-	zephir_update_property_this(this_ptr, SL("_encoding"), encoding TSRMLS_CC);
+	ZEPHIR_INIT_VAR(_3);
+	zephir_fast_strtolower(_3, encoding);
+	zephir_update_property_this(this_ptr, SL("_encoding"), _3 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -448,7 +462,7 @@ PHP_METHOD(Phelper_Utf, substr) {
 	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_24, _20, text, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 189 TSRMLS_CC);
+	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 197 TSRMLS_CC);
 	RETURN_CTOR(_25);
 
 }
@@ -847,10 +861,10 @@ PHP_METHOD(Phelper_Utf, strstr) {
 	zephir_check_call_status();
 	if (zephir_array_isset_long(matches, 1)) {
 		if (beforeNeedle) {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 330 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 338 TSRMLS_CC);
 			RETURN_CTOR(_12);
 		} else {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 332 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 340 TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_13, this_ptr, "strlen", NULL, _12);
 			zephir_check_call_status();
 			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _13);
