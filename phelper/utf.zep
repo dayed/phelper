@@ -85,7 +85,7 @@ class Utf
      *
      * @param mixed text String or array of strings to check
      */
-    public function isAscii(var text) ->boolean
+    public function isAscii(var text) -> boolean
     {
         if typeof text === "array" {
             let text = join("", text);
@@ -104,7 +104,7 @@ class Utf
      *
      * @param string text String being measured for length
      */
-    public function strlen(string! text) ->int
+    public function strlen(string! text) -> int
     {
         if this->_mbSupport {
             return mb_strlen(text, this->_encoding);
@@ -125,7 +125,7 @@ class Utf
      * $sub = $utf->substr($string, $offset);
      * </code>
      */
-    public function substr(string! text, int! offset, var length=null) ->string
+    public function substr(string! text, int! offset, var length=null) -> string
     {
         var stringLen;
         array matches = [];
@@ -204,7 +204,7 @@ class Utf
      * $string = $utf->stripAsciiCtrl($string);
      * </code>
      */
-    public function stripAsciiCtrl(string! text) ->string
+    public function stripAsciiCtrl(string! text) -> string
     {
         return preg_replace("#[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+#S", "", text);
     }
@@ -216,7 +216,7 @@ class Utf
      * $string = $utf->stripNonAscii($string);
      * <code>
      */
-    public function stripNonAscii(string! text) ->string
+    public function stripNonAscii(string! text) -> string
     {
         return preg_replace("#[^\x00-\x7F]+#S", "", text);
     }
@@ -233,7 +233,7 @@ class Utf
      * @param string text Input string
      * @param string charList String of characters (or array of chars) to remove
      */
-    public function ltrim(string! text, var charList = null) ->string
+    public function ltrim(string! text, var charList = null) -> string
     {
         if typeof charList === "null" || charList === false {
             return text->trimleft();
@@ -264,7 +264,7 @@ class Utf
      * @param string text Input string
      * @param string charList String of characters (or array of chars) to remove
      */
-    public function rtrim(string! text, var charList = null) ->string
+    public function rtrim(string! text, var charList = null) -> string
     {
         if typeof charList === "null" || charList === false {
             return text->trimright();
@@ -298,7 +298,7 @@ class Utf
      * @param boolean beforeNeedle [Optional]
      * @return mixed matched substring if found or false if the substring was not found
      */
-    public function stristr(string! stack, var needle, boolean beforeNeedle = false)
+    public function stristr(string! stack, var needle, boolean beforeNeedle = false) -> string|bool
     {
         return this->strstr(stack, needle, beforeNeedle, true);
     }
@@ -319,7 +319,7 @@ class Utf
      * @param boolean caseInsensitive Case insensitive? [Optional]
      * @return mixed matched substring if found or FALSE if the substring was not found
      */
-    public function strstr(string! stack, var needle, boolean beforeNeedle = false, boolean caseInsensitive = false)
+    public function strstr(string! stack, var needle, boolean beforeNeedle = false, boolean caseInsensitive = false) -> string|bool
     {
         array matches = [];
 
