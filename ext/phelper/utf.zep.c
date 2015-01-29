@@ -50,17 +50,21 @@
  +------------------------------------------------------------------------+
  */
 /**
- * Provides multi-byte aware replacement string functions.
+ * Unicode manipulation class.
+ * Provides multi-byte aware replacement string functions and other Unicode utils.
  * This class contains some part from port of [phputf8](http://phputf8.sourceforge.net/) to a unified set of files.
  *
+ * Supported encodings:
+ *
+ * - UTF-8
+ * - UTF-16
+ * - UTF-32
  *
  * For UTF-8 support to work correctly, the following requirements must be met:
  *
  * - PCRE needs to be compiled with UTF-8 support (--enable-utf8)
- * - Support for [Unicode properties](http://php.net/manual/reference.pcre.pattern.modifiers.php)
- *   is highly recommended (--enable-unicode-properties)
- * - The [mbstring extension](http://php.net/mbstring) is highly recommended,
- *   but must not be overloading string functions
+ * - Support for [Unicode properties](http://php.net/manual/reference.pcre.pattern.modifiers.php) is highly recommended (--enable-unicode-properties)
+ * - The [mbstring extension](http://php.net/mbstring) is highly recommended, but must not be overloading string functions   
  *
  * @package Phelper
  * @version 0.0.1-dev
@@ -81,17 +85,11 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
 	 */
 	zend_declare_property_string(phelper_utf_ce, SL("_encoding"), "utf-8", ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_1"), "utf-1" TSRMLS_CC);
-
-	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_7"), "utf-7" TSRMLS_CC);
-
 	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_8"), "utf-8" TSRMLS_CC);
 
 	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_16"), "utf-16" TSRMLS_CC);
 
 	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_32"), "utf-32" TSRMLS_CC);
-
-	zend_declare_class_constant_string(phelper_utf_ce, SL("UTF_EBCDIC"), "utf-ebcdic" TSRMLS_CC);
 
 	return SUCCESS;
 
@@ -138,6 +136,102 @@ PHP_METHOD(Phelper_Utf, __construct) {
 	zephir_fast_strtolower(_3, encoding);
 	zephir_update_property_this(this_ptr, SL("_encoding"), _3 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
+
+}
+
+/**
+ * Get a BOM (Byte Order Mark).
+ * It defines if a document is encoded with big or little endian, and should be in begining of document.
+ *
+ * @return mixed a BOM (string) or NULL if encoding not supported
+ */
+PHP_METHOD(Phelper_Utf, getBom) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_3 = NULL;
+	zval *bigEndian_param = NULL, *_0, _1 = zval_used_for_init, *_2 = NULL, *_4 = NULL, *_5 = NULL, *_6 = NULL;
+	zend_bool bigEndian;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &bigEndian_param);
+
+	if (!bigEndian_param) {
+		bigEndian = 1;
+	} else {
+		bigEndian = zephir_get_boolval(bigEndian_param);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_encoding"), PH_NOISY_CC);
+	do {
+		if (ZEPHIR_IS_STRING(_0, "utf-8")) {
+			ZEPHIR_SINIT_VAR(_1);
+			ZVAL_LONG(&_1, 0xEF);
+			ZEPHIR_CALL_FUNCTION(&_2, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xBB);
+			ZEPHIR_CALL_FUNCTION(&_4, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xBF);
+			ZEPHIR_CALL_FUNCTION(&_5, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_CONCAT_VVV(return_value, _2, _4, _5);
+			RETURN_MM();
+		}
+		if (ZEPHIR_IS_STRING(_0, "utf-16")) {
+			if (bigEndian) {
+				ZEPHIR_SINIT_NVAR(_1);
+				ZVAL_LONG(&_1, 0xFE);
+				ZEPHIR_CALL_FUNCTION(&_2, "chr", &_3, &_1);
+				zephir_check_call_status();
+				ZEPHIR_SINIT_NVAR(_1);
+				ZVAL_LONG(&_1, 0xFF);
+				ZEPHIR_CALL_FUNCTION(&_4, "chr", &_3, &_1);
+				zephir_check_call_status();
+				ZEPHIR_CONCAT_VV(return_value, _2, _4);
+				RETURN_MM();
+			}
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xFF);
+			ZEPHIR_CALL_FUNCTION(&_5, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xFE);
+			ZEPHIR_CALL_FUNCTION(&_6, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_CONCAT_VV(return_value, _5, _6);
+			RETURN_MM();
+		}
+		if (ZEPHIR_IS_STRING(_0, "utf-32")) {
+			if (bigEndian) {
+				ZEPHIR_SINIT_NVAR(_1);
+				ZVAL_LONG(&_1, 0xFE);
+				ZEPHIR_CALL_FUNCTION(&_2, "chr", &_3, &_1);
+				zephir_check_call_status();
+				ZEPHIR_SINIT_NVAR(_1);
+				ZVAL_LONG(&_1, 0xFF);
+				ZEPHIR_CALL_FUNCTION(&_4, "chr", &_3, &_1);
+				zephir_check_call_status();
+				ZEPHIR_CONCAT_VV(return_value, _2, _4);
+				RETURN_MM();
+			}
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xFF);
+			ZEPHIR_CALL_FUNCTION(&_5, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_SINIT_NVAR(_1);
+			ZVAL_LONG(&_1, 0xFE);
+			ZEPHIR_CALL_FUNCTION(&_6, "chr", &_3, &_1);
+			zephir_check_call_status();
+			ZEPHIR_CONCAT_VV(return_value, _5, _6);
+			RETURN_MM();
+		}
+		RETURN_MM_NULL();
+	} while(0);
+
+	RETURN_MM_NULL();
 
 }
 
@@ -462,7 +556,7 @@ PHP_METHOD(Phelper_Utf, substr) {
 	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_24, _20, text, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 197 TSRMLS_CC);
+	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 228 TSRMLS_CC);
 	RETURN_CTOR(_25);
 
 }
@@ -861,10 +955,10 @@ PHP_METHOD(Phelper_Utf, strstr) {
 	zephir_check_call_status();
 	if (zephir_array_isset_long(matches, 1)) {
 		if (beforeNeedle) {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 338 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 369 TSRMLS_CC);
 			RETURN_CTOR(_12);
 		} else {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 340 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 371 TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_13, this_ptr, "strlen", NULL, _12);
 			zephir_check_call_status();
 			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _13);
