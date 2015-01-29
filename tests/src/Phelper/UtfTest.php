@@ -188,7 +188,7 @@ class UtfTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Provides test data for test_rtrim()
+     * Provides test data for testRtrim()
      */
     public function rtrimProvider()
     {
