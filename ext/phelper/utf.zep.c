@@ -98,7 +98,7 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
 /**
  * Class constructor
  *
- * @param string encoding Current encoding (also using in mb_* functions). By default uset UTF-8. [Optional]
+ * @param string encoding Current encoding (also using in mb_* functions). By default uses UTF-8. [Optional]
  * @throws \Exception When not supported encoding
  */
 PHP_METHOD(Phelper_Utf, __construct) {
