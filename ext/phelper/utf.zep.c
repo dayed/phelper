@@ -64,7 +64,7 @@
  *
  * - PCRE needs to be compiled with UTF-8 support (--enable-utf8)
  * - Support for [Unicode properties](http://php.net/manual/reference.pcre.pattern.modifiers.php) is highly recommended (--enable-unicode-properties)
- * - The [mbstring extension](http://php.net/mbstring) is highly recommended, but must not be overloading string functions   
+ * - The [mbstring extension](http://php.net/mbstring) is highly recommended, but must not be overloading string functions
  *
  * @package Phelper
  * @version 0.0.1-dev
@@ -99,7 +99,7 @@ ZEPHIR_INIT_CLASS(Phelper_Utf) {
  * Class constructor
  *
  * @param string encoding Current encoding (also using in mb_* functions). By default uses UTF-8. [Optional]
- * @throws \Exception When not supported encoding
+ * @throws \InvalidArgumentException When not supported encoding
  */
 PHP_METHOD(Phelper_Utf, __construct) {
 
@@ -134,7 +134,7 @@ PHP_METHOD(Phelper_Utf, __construct) {
  * Set current encoding
  *
  * @param string encoding Current encoding (also using in mb_* functions)
- * @throws \Exception When not supported encoding
+ * @throws \InvalidArgumentException When not supported encoding
  * @return \Phelper\Utf
  */
 PHP_METHOD(Phelper_Utf, setEncoding) {
@@ -175,7 +175,7 @@ PHP_METHOD(Phelper_Utf, setEncoding) {
 	ZEPHIR_CALL_FUNCTION(&_5, "defined", &_6, _4);
 	zephir_check_call_status();
 	if (!(zephir_is_true(_5))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zend_exception_get_default(TSRMLS_C), "Invalid encoding. Support only: utf-8, utf-16 and utf-32", "phelper/utf.zep", 96);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Invalid encoding. Support only: utf-8, utf-16 and utf-32", "phelper/utf.zep", 96);
 		return;
 	}
 	ZEPHIR_INIT_VAR(_7);
@@ -199,8 +199,9 @@ PHP_METHOD(Phelper_Utf, getEncoding) {
 
 /**
  * Get a BOM (Byte Order Mark).
- * It defines if a document is encoded with big or little endian, and should be in begining of document.
+ * It defines if a document is encoded with big or little endian, and should be in beginning of document.
  *
+ * @param  bool $bigEndian Whether the result is in big or little endian [Optional]
  * @return mixed a BOM (string) or NULL if encoding not supported
  */
 PHP_METHOD(Phelper_Utf, getBom) {
@@ -614,7 +615,7 @@ PHP_METHOD(Phelper_Utf, substr) {
 	ZEPHIR_CALL_FUNCTION(NULL, "preg_match", &_24, _20, text, matches);
 	Z_UNSET_ISREF_P(matches);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 263 TSRMLS_CC);
+	zephir_array_fetch_long(&_25, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 264 TSRMLS_CC);
 	RETURN_CTOR(_25);
 
 }
@@ -1013,10 +1014,10 @@ PHP_METHOD(Phelper_Utf, strstr) {
 	zephir_check_call_status();
 	if (zephir_array_isset_long(matches, 1)) {
 		if (beforeNeedle) {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 404 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 405 TSRMLS_CC);
 			RETURN_CTOR(_12);
 		} else {
-			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 406 TSRMLS_CC);
+			zephir_array_fetch_long(&_12, matches, 1, PH_NOISY | PH_READONLY, "phelper/utf.zep", 407 TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_13, this_ptr, "strlen", NULL, _12);
 			zephir_check_call_status();
 			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "substr", NULL, stack, _13);

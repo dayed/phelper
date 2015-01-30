@@ -17,7 +17,7 @@ namespace Phelper;
  *
  * - PCRE needs to be compiled with UTF-8 support (--enable-utf8)
  * - Support for [Unicode properties](http://php.net/manual/reference.pcre.pattern.modifiers.php) is highly recommended (--enable-unicode-properties)
- * - The [mbstring extension](http://php.net/mbstring) is highly recommended, but must not be overloading string functions 
+ * - The [mbstring extension](http://php.net/mbstring) is highly recommended, but must not be overloading string functions
  *
  * @package Phelper
  * @version 0.0.1-dev
@@ -45,7 +45,7 @@ class Utf
      * Class constructor
      *
      * @param string $encoding Current encoding (also using in mb_* functions). By default use UTF-8. [Optional]
-     * @throws \Exception When not supported encoding
+     * @throws \InvalidArgumentException When not supported encoding
      */
     public function __construct($encoding = null) {}
 
@@ -53,25 +53,26 @@ class Utf
      * Set current encoding
      *
      * @param string $encoding Current encoding (also using in mb_* functions)
-     * @throws \Exception When not supported encoding
+     * @throws \InvalidArgumentException When not supported encoding
      * @return \Phelper\Utf
      */
-    public function setEncoding($encoding)
+    public function setEncoding($encoding) {}
 
     /**
      * Get current encoding
      *
      * @return string
      */
-    public function getEncoding()
+    public function getEncoding() {}
 
     /**
      * Get a BOM (Byte Order Mark).
-     * It defines if a document is encoded with big or little endian, and should be in begining of document.
+     * It defines if a document is encoded with big or little endian, and should be in beginning of document.
      *
+     * @param  bool $bigEndian Whether the result is in big or little endian [Optional]
      * @return mixed a BOM (string) or NULL if encoding not supported
      */
-    public function getBom(bool bigEndian = true) {}
+    public function getBom($bigEndian = true) {}
 
     /**
      * Tests whether a string contains only 7-bit ASCII bytes.
