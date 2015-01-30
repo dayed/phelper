@@ -60,6 +60,47 @@ class UtfTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Invalid encoding. Support only: utf-8, utf-16 and utf-32
+     */
+    public function testThrowsWhenInvalidEncoding()
+    {
+        $utf = new Utf('Abc');
+    }
+
+    /**
+     * Provides test data for testConstants()
+     */
+    public function constatsProvider()
+    {
+        return array(
+            array('utf-8',  Utf::UTF_8),
+            array('utf-16', Utf::UTF_16),
+            array('utf-32', Utf::UTF_32),
+        );
+    }
+
+    /**
+     * @dataProvider constatsProvider
+     */
+    public function testConstants($encoding, $expected)
+    {
+        $this->assertSame($expected, $encoding);
+    }
+
+    public function testCanSetGetEncoding()
+    {
+        $utf = new Utf('Utf-8');
+        $this->assertSame(Utf::UTF_8, $utf->getEncoding());
+
+        $utf->setEncoding('uTf-16');
+        $this->assertSame(Utf::UTF_16, $utf->getEncoding());
+
+        $utf->setEncoding('UTF-32');
+        $this->assertSame(Utf::UTF_32, $utf->getEncoding());
+    }
+
+    /**
      * Provides test data for testIsAscii()
      */
     public function asciiProvider()
