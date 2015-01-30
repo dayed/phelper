@@ -68,4 +68,4 @@ For additional information see [PHPUnit The Command-Line Test Runner](https://ph
 
 ### License
 
-Licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt). Copyright (c) 2015 Serghei Iakovlev
+Licensed under the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.txt). Copyright (c) 2015 Serghei Iakovlev
